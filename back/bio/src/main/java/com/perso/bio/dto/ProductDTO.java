@@ -6,14 +6,17 @@ public class ProductDTO {
     private String productName;
     private Integer productStock;
     private String productLink;
+    private Integer productUnitPrice;
 
     public ProductDTO() {
 
     }
-    public ProductDTO(String productName, Integer productStock, String productLink) {
+
+    public ProductDTO(String productName, Integer productStock, String productLink, Integer productUnitPrice) {
         this.productName = productName;
         this.productStock = productStock;
         this.productLink = productLink;
+        this.productUnitPrice = productUnitPrice;
     }
 
     public Integer getProductId() {
@@ -46,5 +49,13 @@ public class ProductDTO {
 
     public void setProductLink(String productLink) {
         this.productLink = productLink;
+    }
+
+    public Integer getProductUnitPrice() {
+        return productUnitPrice;
+    }
+
+    public void setProductUnitPrice(Integer productUnitPrice) {
+        this.productUnitPrice = productUnitPrice;
     }
 }

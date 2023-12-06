@@ -19,7 +19,11 @@ public class BodyPart {
 
     private String bodyName;
 
-    @ManyToMany(mappedBy = Field.BODY_PARTS)
+    @ManyToMany
+    @JoinTable(
+            name = Field.PRODUCT_BODY_PART,
+            joinColumns = @JoinColumn(name = Field.BODY_PART_ID),
+            inverseJoinColumns = @JoinColumn(name = Field.PRODUCT_ID))
     private List<Product> products = new ArrayList<>();
 
     public BodyPart() {

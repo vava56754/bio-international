@@ -14,9 +14,9 @@ public interface HouseService {
 
     House getHouse(Integer houseId) throws MalformedURLException;
 
-    List<House> getAllHouse();
+    List<House> getAllHouses();
 
-    void updateHouse( Integer houseId, House house, MultipartFile file) throws FileNotFoundException;
+    void updateHouse(Integer houseId, House house, MultipartFile file) throws FileNotFoundException;
 
     void deleteHouse(Integer houseId) throws FileNotFoundException;
 

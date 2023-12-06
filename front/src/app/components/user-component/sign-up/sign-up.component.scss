@@ -1,0 +1,93 @@
+
+.form-sign {
+    justify-self: center;
+    .user-grid {
+        margin-top: 16px;
+        display: flex;
+        flex-direction: column;
+        
+        border-bottom: solid 1px green;
+        .user-info {
+            display: grid;
+            .user-adress {
+                margin-top: 18px;
+                display: grid;
+                .city {
+                    display: grid;
+                    gap: 4px;
+                    grid-template-columns: repeat(2, 0.5fr);
+    
+                    .input-base {
+                        width: 200px;
+                    }
+                }
+            }
+        }
+        .user-login {
+            margin-block: 16px;
+        }
+    }
+
+    .button {
+        display: grid;
+        justify-items: center;
+        margin-top: 2%;
+        margin-bottom: 80px;
+    }
+}
+
+.input-base {
+    margin-bottom: 16px;
+}
+
+.select-style {
+    border-bottom: solid 2px;
+    width: 400px;
+}
+
+@media screen and (max-width: 800px) {
+    .form-sign {
+        .user-grid {
+            .user-info {
+                .user-adress {
+                    .city {
+                        display: grid;
+                        grid-template-columns: auto;
+                        .input-base {
+                            width: 300px;
+                        }
+        
+                    }
+                }
+            }
+        }
+        
+    }
+
+    .select-style {
+        width: 300px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .form-sign {
+        .user-grid {
+            .user-info {
+                .user-adress {
+                    .city {
+                        display: grid;
+                        grid-template-columns: auto;
+                        .input-base {
+                            width: 200px;
+                        }
+        
+                    }
+                }
+            }
+        }
+    }
+
+    .select-style {
+        width: 200px;
+    }
+}

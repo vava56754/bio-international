@@ -1,0 +1,49 @@
+<div class="product-content">
+    <div class="current-procurement">
+
+        <div>
+            <h1>Commande N°{{id}}</h1>
+        </div>
+        <div>réalisée le {{procurement.procurementDate | date: 'dd/MM/yyyy, à HH:mm' }}</div>
+        <div *ngIf="procurement.userId && procurement.procurementId != 0 && procurement.amount != 0 && procurement.lineProcurementList != []">
+            <a (click)="goToProductDetail(line.product.productId)" *ngFor="let line of procurement.lineProcurementList" class="procurement">
+                <div class="procurement-property">
+                    <div class="column-image">
+                        <div *ngIf="line.product.productImageUrl" class="product-image">
+                            <img [src]="line.product.productImageUrl" alt="Product Image">
+                        </div>
+                    </div>
+                    <div class="property">
+                        <div class="column-info">
+                            <div class="name">
+                                <h3>{{line.product.productName}}</h3>
+                            </div>
+                            <div> 
+                                <a>{{line.lineUnitPrice}}€</a>
+                            </div>
+                            
+                        </div>
+                        <div class="quantity">
+                            <div>Quantité : {{line.lineQuantity}}</div>
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+                
+            </a>
+            <div class="amount">
+                <a>Total : </a>
+                <a>{{procurement.amount}}€</a>
+            </div>
+            <div class="validate">
+                
+            </div>
+        </div>
+        <div *ngIf="procurement.procurementId == 0 || procurement.amount == 0 || !procurement.procurementId" class="empty">
+            <i class="fa-solid fa-basket-shopping"></i>
+            <h2>No Order Here</h2>
+        </div>
+        
+    </div>
+    
+</div>

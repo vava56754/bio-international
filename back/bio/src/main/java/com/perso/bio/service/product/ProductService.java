@@ -15,9 +15,15 @@ public interface ProductService {
 
     Product getProduct(Integer productId) throws MalformedURLException;
 
-    List<Product> getProductByTypeAndBodyPart(Integer typeId, Integer bodyId);
+    Product getProductVisible(Integer productId) throws MalformedURLException;
 
-    List<Product> getAllProduct();
+    List<Product> searchProducts(String name);
+
+    List<Product> getProductsByTypeAndBodyPart(Integer typeId, Integer bodyId);
+
+    List<Product> getAllProducts();
+
+    void updateIsVisible(Integer productId);
 
     void deleteProduct(Integer productId) throws FileNotFoundException;
 }

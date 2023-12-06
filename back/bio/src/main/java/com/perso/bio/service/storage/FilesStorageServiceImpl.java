@@ -2,6 +2,9 @@ package com.perso.bio.service.storage;
 
 
 import com.perso.bio.constants.MessageConstants;
+import com.perso.bio.service.product.ProductServiceImpl;
+import jakarta.persistence.EntityNotFoundException;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,8 @@ import java.util.stream.Stream;
 public class FilesStorageServiceImpl implements FilesStorageService {
 
     private final Path root = Paths.get(MessageConstants.FILE_PATH);
+
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(FilesStorageServiceImpl.class);
 
     @Override
     public void init() throws FileSystemException {
@@ -81,7 +86,10 @@ public class FilesStorageServiceImpl implements FilesStorageService {
         try {
             return Files.walk(this.root, 1).filter(path -> !path.equals(this.root)).map(this.root::relativize);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            String message = String.format("[FilesStorageService@%s::loadAll] Fail to stream path: %s", this.getClass().getSimpleName(), e.getMessage());
+            log.error(message);
+            throw new EntityNotFoundException(e.getMessage());
+
         }
     }
 }

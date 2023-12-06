@@ -2,6 +2,7 @@ package com.perso.bio.dto;
 
 import com.perso.bio.enums.ProcurementState;
 import com.perso.bio.model.procurement.LineProcurement;
+import com.perso.bio.model.user_management.User;
 
 import java.time.Instant;
 import java.util.List;
@@ -12,7 +13,7 @@ public class ProcurementDTO {
     private Instant procurementDate;
     private ProcurementState procurementState;
     private List<LineProcurementDTO> lineProcurementList;
-    private Integer userId;
+    private User userId;
     private Integer amount;
 
     public ProcurementDTO() {
@@ -57,11 +58,11 @@ public class ProcurementDTO {
         this.lineProcurementList = lineProcurementList;
     }
 
-    public Integer getUserId() {
+    public User getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(User userId) {
         this.userId = userId;
     }
 

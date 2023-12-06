@@ -1,0 +1,56 @@
+$color2 :rgb(38, 97, 89);
+$background-color :#eeebebe7;
+$font :"Avenir Next";
+
+.product-content {
+
+    .create {
+        margin-top: 48px;
+        justify-self: center;
+        button {
+            font-weight: bolder; 
+            padding :20px;
+            background-color: $color2;
+            font-family: $font;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            &:hover {
+                background-color: #489c69;
+            }
+        }
+    }
+
+    .product-categorie {
+        justify-self: center;
+        margin-top: 80px;
+        
+        position: relative; 
+    }
+
+    .product-list {
+        .product {
+            &-image {
+                img {
+                    width: 210px;
+                    height: 210px;
+                }
+                
+            }
+            
+            &-stock {
+                font-weight: bolder;
+                color: $color2;
+            }
+        }
+        
+        .manage {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: row;
+            .style-button {
+                width: 90px;
+            }
+        }
+    }
+}

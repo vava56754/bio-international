@@ -1,0 +1,51 @@
+<div>
+    <div class="product-content">
+        
+
+        <app-picture-content [title]="'Management Produits'" [src]="'../../assets/wallpaper/product.jpg'"></app-picture-content>
+        <div class="create">
+            <button (click)="goToCreate()">Ajouter un produit</button>
+        </div>
+        <div class="product-categorie"><h3>Produits Affichés</h3></div>
+        <div *ngIf="products" class="product-list">
+                <div *ngFor="let product of productsVisible" class="product-limit">
+                    <a (click)="goToProductDetail(product.productId)" class="product">
+                        <div *ngIf="product.productImageUrl" class="product-image">
+                            <img [src]="product.productImageUrl" alt="Product Image">
+                        </div>
+                        <h2 class="product-title">{{ product.productName }}</h2>
+                        <p class="product-price">{{ product.productUnitPrice}} €</p>
+                        <p class="product-stock">Stock : {{ product.productStock}}</p>
+                    </a>
+                    <div class="manage">
+                        <button (click)="goToProductDetail(product.productId)" class="style-button">Modifier</button>
+                        <button (click)="hiddenOrShowProduct(product.productId)" class="style-button">Masquer</button>
+                    </div>         
+                </div>
+        </div>
+        <div class="product-categorie"><h3>Produits Masqués</h3></div>
+        <div *ngIf="products" class="product-list">
+            <div *ngFor="let product of productsHidden" class="product-limit">
+                <a (click)="goToProductDetail(product.productId)" class="product">
+                    <div *ngIf="product.productImageUrl" class="product-image">
+                        <img [src]="product.productImageUrl" alt="Product Image">
+                    </div>
+                    <h2 class="product-title">{{ product.productName }}</h2>
+                    <p class="product-price">{{ product.productUnitPrice}} €</p>
+                    <p class="product-stock">Stock : {{ product.productStock}}</p>
+                </a>
+                <div class="manage">
+                    <button (click)="goToProductDetail(product.productId)" class="style-button">Modifier</button>
+                    <button (click)="hiddenOrShowProduct(product.productId)" class="style-button">Afficher</button>
+                </div>         
+            </div>
+        </div>
+
+        <div *ngIf="products.length == 0" class="product-empty">
+            <i class="fa-solid fa-store"></i>
+            <h2>There is no product
+            </h2>
+        </div>
+        <app-notification></app-notification>
+    </div>
+</div>

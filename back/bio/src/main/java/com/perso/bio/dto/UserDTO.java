@@ -1,25 +1,26 @@
 package com.perso.bio.dto;
 
 public class UserDTO {
-    private String usernameDTO;
+    private String userName;
     private String nameDTO;
-    private String firstNameDTO;
-    private String phoneDTO;
-    private String addressDTO;
-    private String postalCodeDTO;
-    private String cityDTO;
-    private String countryDTO;
+    private String userFirstName;
+    private String userMail;
+    private String userPhone;
+    private String userAddress;
+    private String userPostalCode;
+    private String userCity;
+    private String userCountry;
 
     public UserDTO() {
 
     }
 
-    public String getUsernameDTO() {
-        return usernameDTO;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsernameDTO(String usernameDTO) {
-        this.usernameDTO = usernameDTO;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getNameDTO() {
@@ -30,51 +31,59 @@ public class UserDTO {
         this.nameDTO = nameDTO;
     }
 
-    public String getFirstNameDTO() {
-        return firstNameDTO;
+    public String getUserFirstName() {
+        return userFirstName;
     }
 
-    public void setFirstNameDTO(String firstNameDTO) {
-        this.firstNameDTO = firstNameDTO;
+    public void setUserFirstName(String userFirstName) {
+        this.userFirstName = userFirstName;
     }
 
-    public String getPhoneDTO() {
-        return phoneDTO;
+    public String getUserPhone() {
+        return userPhone;
     }
 
-    public void setPhoneDTO(String phoneDTO) {
-        this.phoneDTO = phoneDTO;
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
     }
 
-    public String getAddressDTO() {
-        return addressDTO;
+    public String getUserAddress() {
+        return userAddress;
     }
 
-    public void setAddressDTO(String addressDTO) {
-        this.addressDTO = addressDTO;
+    public void setUserAddress(String userAddress) {
+        this.userAddress = userAddress;
     }
 
-    public String getPostalCodeDTO() {
-        return postalCodeDTO;
+    public String getUserPostalCode() {
+        return userPostalCode;
     }
 
-    public void setPostalCodeDTO(String postalCodeDTO) {
-        this.postalCodeDTO = postalCodeDTO;
+    public void setUserPostalCode(String userPostalCode) {
+        this.userPostalCode = userPostalCode;
     }
 
-    public String getCityDTO() {
-        return cityDTO;
+    public String getUserCity() {
+        return userCity;
     }
 
-    public void setCityDTO(String cityDTO) {
-        this.cityDTO = cityDTO;
+    public void setUserCity(String userCity) {
+        this.userCity = userCity;
     }
 
-    public String getCountryDTO() {
-        return countryDTO;
+    public String getUserCountry() {
+        return userCountry;
     }
 
-    public void setCountryDTO(String countryDTO) {
-        this.countryDTO = countryDTO;
+    public void setUserCountry(String userCountry) {
+        this.userCountry = userCountry;
+    }
+
+    public String getUserMail() {
+        return userMail;
+    }
+
+    public void setUserMail(String userMail) {
+        this.userMail = userMail;
     }
 }

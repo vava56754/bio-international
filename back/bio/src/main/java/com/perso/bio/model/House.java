@@ -11,10 +11,13 @@ public class House {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int houseId;
     private String houseName;
+
+    @Column(length = 1000)
     private String houseDescription;
     private String houseLink;
 
-    public House(){
+
+    public House() {
 
     }
 

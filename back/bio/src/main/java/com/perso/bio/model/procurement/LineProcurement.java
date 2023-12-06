@@ -22,7 +22,7 @@ public class LineProcurement {
     @JoinColumn(name = Field.PROCUREMENT_ID)
     private Procurement procurement;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = Field.PRODUCT_ID)
     private Product product;
 

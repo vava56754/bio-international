@@ -14,6 +14,8 @@ public class MessageConstants {
     public static final String LINE_PROCUREMENT_SERVICE_ERROR_MESSAGE = "Ligne de commande non trouvé avec l'ID : ";
     public static final String PROCUREMENT_SERVICE_ERROR_MESSAGE = "Commande non trouvé avec l'ID : ";
     public static final String PRODUCT_SERVICE_ERROR_MESSAGE = "Produit non trouvé avec l'ID : ";
+    public  static final String PRODUCT_SERVICE_QUANTITY_PRICE_ERROR = "La quantitée ou le prix du produit doit être supérieure ou égale à 1";
+    public static final String USER_SERVICE_ERROR_MESSAGE = "Utilisateur non trouvé avec l'ID : ";
 
     /*** JWT ***/
 
@@ -27,7 +29,7 @@ public class MessageConstants {
 
     /*** FILE ***/
 
-    public static final String FILE_PATH = "src/main/resources/images";
+    public static final String FILE_PATH = "/app/images";
     public static final String FILE_ERROR_UPLOAD = "Impossible d'initialiser le dossier pour le téléchargement !";
     public static final String FILE_ALREADY_EXIST = "Le fichier existe deja.";
     public static final String FILE_READ_ERROR = "impossible de lire le fichier";
@@ -45,18 +47,23 @@ public class MessageConstants {
 
     /*** PRODUCT ***/
     public static final String PRODUCT_NOT_FOUND = "produit non trouvé";
+    public static final String PRODUCT_OUT_OF_STOCK = "plus de stock pour ce produit";
 
     /*** CONTROLLER ADVICE ***/
     public static final String INTERNAL_ERROR = "Erreur interne du serveur : ";
     public static final String INVALID_FORMAT = "Le format passer ne correspond pas au format attendu : ";
+    public static final String INVALID_ATTRIBUTE = "Attribut non attendu : ";
+    public static final String FORBIDDEN_LOGIN = "Les informations de connexion sont incorrectes : ";
     public static final String MAIL_ALREADY_EXIST = "Cette adresse mail est deja utilisée : ";
     public static final String FILE_NOT_FOUND = "Aucun fichier trouvé : ";
     public static final String MALFORMED_URL = "L'url est incorrect ou mal construite : ";
+    public static final String JSON_PROCESSING_ERROR = "Erreur lors de la conversion de l'objet : ";
+    public static final String CONNECTION_EXPIRED = "Connexion expiré : ";
 
 
     /*** CRUD ***/
     public static final String CREATE = "Création Réussie";
-    public static final String UPDATE = "Mise à jou Réussie";
+    public static final String UPDATE = "Mise à jour Réussie";
     public static final String DELETE = "Suppression Réussie";
 
     /*** USER CONTROLLER ***/

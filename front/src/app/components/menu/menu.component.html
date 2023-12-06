@@ -1,0 +1,79 @@
+<nav>
+    <div class="wrapper">
+        <div class="logo"><a href="/">Bio International</a></div>
+        <input type="radio" name="slider" id="menu-btn">
+        <input type="radio" name="slider" id="close-btn">
+        <ul class="nav-links">
+            <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
+            <li><a href="/">Accueil</a></li>
+            <li><a href="products">Produits</a></li>
+            <li><a href="houses">Maison</a></li>
+            <li>
+                <a class="desktop-item">A propos de moi</a>
+                <input type="checkbox" id="showDrop">
+                <label for="showDrop" class="mobile-item">A propos de moi</label>
+                <ul class="drop-menu">
+                  <li><a href="who">Qui suis-je ?</a></li>
+                  <li><a href="for-who">Pour qui ?</a></li>
+                </ul>
+            </li>
+            <li>
+                <a (click)="openSearchNav()" ><i class="fa-solid fa-magnifying-glass"></i></a>
+            </li>
+            <li><a  href="basket" ><i class="fa-solid fa-basket-shopping"></i></a></li>
+            <li><a><i class="fa-solid fa-user"></i></a>
+                <input type="checkbox" id="showMega">
+                <label for="showMega" class="mobile-item">Compte</label>
+                <div class="mega-box">
+                <div class="content-mega-box">
+                    <div class="row">
+                    <header>Compte</header>
+                    <ul class="mega-links">
+                        <li *ngIf="!isLoggedIn()"><a href="login">Connexion</a></li>
+                        <li *ngIf="isLoggedIn()"><a (click)="logout()" >Deconnexion</a></li>
+                        <li *ngIf="isLoggedIn()"><a href="user">Mon Compte</a></li>
+                    </ul>
+                    </div>
+                    <div class="row" *ngIf="isLoggedIn()">
+                    <header>Commandes</header>
+                    <ul class="mega-links">
+                        <li><a href="basket">Mon Panier</a></li>
+                        <li><a href="procurement">Mes Commandes</a></li>
+                    </ul>
+                    </div>
+                    <div class="row" *ngIf="isLoggedIn() && getRole() === 'ADMIN'" >
+                        <header>Admin</header>
+                        <ul class="mega-links">
+                            <li><a *ngIf="isLoggedIn() && getRole() === 'ADMIN'" href="/admin-procurement">Commande</a></li>
+                            <li><a *ngIf="isLoggedIn() && getRole() === 'ADMIN'" href="/admin-product">Produit Config</a></li>
+                            <li><a *ngIf="isLoggedIn() && getRole() === 'ADMIN'" href="/admin-type-body">Type et Corps Config</a></li>
+                            <li><a *ngIf="isLoggedIn() && getRole() === 'ADMIN'" href="/admin-house">Maison Config</a></li>
+                        </ul>
+                        </div>
+                </div>
+                </div>
+            </li>
+        </ul>
+        <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars"></i></label>
+    </div>
+</nav>
+
+<div class="search-product">
+    <div class="search-product-menu">
+        <div id="search-nav" class="search-nav" [ngClass]="{'active': isNavSearchOpen}">
+            <div>
+                <a id="closeBtn" class="close-search-nav" (click)="closeSearchNav()"><i class="fa-solid fa-xmark"></i></a>
+                <div class="search-menu-element">
+                    <div class="search">
+                       
+                        <input id="searchBar" type="text" name="searchBar" placeholder="Rechercher un produit" class="input-base" [(ngModel)]="nameSearch" (input)="onSearchChange($event)">
+                    </div>
+                </div>
+            </div> 
+            <div class="search-content" *ngIf="nameSearch">
+                <app-product-search [searchName]="nameSearch"></app-product-search>
+            </div>
+            
+        </div>
+    </div> 
+</div>

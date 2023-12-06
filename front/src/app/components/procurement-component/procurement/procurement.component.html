@@ -1,0 +1,89 @@
+<div class="product-content">
+    <div class="list-procurement" *ngIf="validateProcurementList != []" >
+        <div><h1>Commande en cours</h1></div>
+        <div *ngFor="let validateProcurement of validateProcurementList"  class="list-procurement-detail">
+            <h2> Commande N°{{validateProcurement.procurementId}}</h2>
+            <a (click)="goToProcurement(validateProcurement.procurementId)" *ngFor="let line of validateProcurement.lineProcurementList" class="list-procurement-content">
+                <div class="list-procurement-property">
+                    <div class="list-column-image">
+                        <div *ngIf="line.product.productImageUrl" class="list-product-image">
+                            <img [src]="line.product.productImageUrl" alt="Product Image">
+                        </div>
+                    </div>
+                    <div class="list-property">
+                        <div class="list-column-info">
+                            <div>
+                                <h3>{{line.product.productName}}</h3>
+                            </div>
+                            <div>
+                                <a>{{line.lineUnitPrice}}€</a>
+                            </div>
+                        </div>
+                        <div class="list-quantity">
+                            <a>{{line.lineQuantity}}</a>
+                        </div>
+                       
+                    </div>
+                    <div></div>
+                </div>
+            </a>
+            <div class="list-manage">
+                <div  class="list-amount">
+                    <a>Total : </a>
+                    <a>{{validateProcurement.amount}}€</a>
+                </div>
+                <div> <button (click)="goToProcurement(validateProcurement.procurementId)" class="style-button">Voir plus</button></div>
+
+            </div>
+
+        </div>
+    </div>
+    <div *ngIf="validateProcurementList[0] == null" class="empty">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <h2>No Order Here</h2>
+    </div>
+    <div class="list-procurement" *ngIf="pastProcurement != []" >
+        <div><h1>Commandes passées</h1></div>
+        <div *ngFor="let oldProcurement of pastProcurement"  class="list-procurement-detail">
+            <h2> Commande N°{{oldProcurement.procurementId}}</h2>
+            <a (click)="goToProcurement(oldProcurement.procurementId)" *ngFor="let line of oldProcurement.lineProcurementList" class="list-procurement-content">
+                <div class="list-procurement-property">
+                    <div class="list-column-image">
+                        <div *ngIf="line.product.productImageUrl" class="list-product-image">
+                            <img [src]="line.product.productImageUrl" alt="Product Image">
+                        </div>
+                    </div>
+                    <div class="list-property">
+                        <div class="list-column-info">
+                            <div>
+                                <h3>{{line.product.productName}}</h3>
+                            </div>
+                            <div>
+                                <a>{{line.lineUnitPrice}}€</a>
+                            </div>
+                        </div>
+                        <div class="list-quantity">
+                            <a>{{line.lineQuantity}}</a>
+                        </div>
+                       
+                    </div>
+                    <div></div>
+                </div>
+            </a>
+            <div class="list-manage">
+                <div  class="list-amount">
+                    <a>Total : </a>
+                    <a>{{oldProcurement.amount}}€</a>
+                </div>
+                <div> <button (click)="goToProcurement(oldProcurement.procurementId)" class="style-button">Voir plus</button></div>
+
+            </div>
+            
+        </div>
+    </div>
+    <div *ngIf="pastProcurement[0] == null" class="empty">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <h2>No Order Here</h2>
+    </div>
+</div>
+

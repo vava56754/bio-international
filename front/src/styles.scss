@@ -1,1 +1,827 @@
-/* You can add global styles to this file, and also import other style files */
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$front-primary: mat.define-palette(mat.$indigo-palette);
+$front-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$front-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$front-theme: mat.define-light-theme((
+  color: (
+    primary: $front-primary,
+    accent: $front-accent,
+    warn: $front-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($front-theme);
+
+@font-face {
+  font-family: 'Avenir Next';
+  src: url('./assets/font/AvenirNextCyr-Light.ttf') format('truetype');
+  font-weight: 300; 
+  font-style: normal; 
+  font-display: swap;
+}
+$color : #233d25;
+$color2 :rgb(38, 97, 89);
+$input-border-color : rgb(48, 99, 38); 
+$font :"Avenir Next";
+$input-font-size : 1rem;
+
+body {
+  margin: 0px;
+}
+
+.select-style {
+  font-family: $font;
+  font-size: large;
+  font-weight: bold;
+  color: $color2;
+  width: 200px;
+  height: 3vh;
+  border: none;
+  border-bottom: 10px linear-gradient(to right, #11998e,#38ef7d);
+  &:focus-visible{
+      color: #11998e
+  }
+}
+
+.empty {
+  display: grid;
+  justify-content: center;
+  padding-top: 100px;
+  grid-template-rows: 1fr 1fr;
+  i {
+      color: gray;
+      font-size: 300px;
+  }
+  h2 {
+      padding-top: 50px;
+      color: gray;
+      text-align: center;
+  }
+}
+
+.content {
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-base {
+  display: block;
+  width: 400px;
+  border: 0;
+  border-bottom: 2px solid gray;
+  outline: 0;
+  font-size: $input-font-size ;
+  color: $input-border-color;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+  &:focus {
+    border-width: 3px;
+    border-image: linear-gradient(to right, #11998e,#38ef7d);
+    border-image-slice: 1;
+  }
+
+  
+}
+
+.style-button {
+  margin-top: 10px;
+  font-weight: bolder;
+  padding :10px;
+  background-color: $color2;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: $font;
+  width: 105px;
+  &:hover {
+    background-color: #489c69;
+  }
+  
+}
+
+.manage {
+  margin-bottom: 20px;
+  .style-button {
+    margin-inline: 10px;              
+    width: 120px;
+    &:hover {
+        background-color: #489c69;
+        cursor: pointer;
+    }
+  }
+}
+
+/*** PRODUCT ****/
+.product-detail {
+
+  padding: 50px;
+  font-weight: bold;
+  display: grid;
+  justify-content: center;
+  .product-element-edit {
+
+      justify-self: center;
+      margin-bottom: 3vh;
+      .product-image {
+          margin: 2%;
+          img{
+              width: 250px;
+              height: 250px;
+              object-fit: cover;
+              border-radius: 15%;
+             
+          }
+          
+      }
+      .field-manage {
+          button {
+              margin-right: 10px;
+          }
+      }
+      
+  }
+  .filter-product {
+      justify-self: center;
+      margin: 3%
+  }
+  .manage {
+      justify-self: center;
+      .style-button {  
+          border-radius: 10px;
+      }
+  }
+}
+
+.house-detail-admin {
+  padding: 80px;
+  font-weight: bold;
+  display: grid;
+
+  .house-element-edit {
+     
+      margin-bottom: 3vh;
+      display: grid;
+      grid-template-rows: auto;
+      gap: 20px;
+      justify-items: center;
+      .house-image {
+          justify-self: center;
+          img{
+              width: 700px; 
+              height: 250px; 
+              object-fit: cover;
+          }
+      }
+      
+  }
+  .manage {
+      justify-self: center;
+  }
+}
+
+
+
+.product-content {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  .list-procurement {
+    width: 800px; 
+    margin-top: 60px;
+    margin-bottom: 50px;
+    justify-self: center;
+
+    .list-procurement-detail {
+      transform: scale(1);
+      transition: transform 0.2s ease;
+      &:hover {
+          transform: scale(1.05);
+          cursor: pointer;
+      }
+      box-shadow: -4px 7px 26px 0px rgba(0,0,0,0.1);
+      background-color: white;
+      padding-inline: 30px;
+      padding-top: 15px;
+      padding-bottom: 20px;
+      margin-top: 10%;
+      border-bottom: solid 1px gray;
+    }
+    .list-manage {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      .list-amount {
+        margin-top: 5%;
+        a{
+          justify-self: center;
+          font-weight: bolder;
+          font-size: x-large;
+        }
+          
+      }
+
+    }
+  
+    .list-validate {
+      margin-top: 5%;
+    }
+
+    .list-procurement-content {
+      display: grid;
+      justify-self: center; 
+      border-bottom: solid 1px gray;
+      .list-procurement-property {
+      margin: 4%;
+      display: grid;
+
+      grid-template-columns: repeat(3, 0.5fr);
+      grid-auto-columns: 0.5fr 3fr 1fr;
+
+      .list-column-image {
+          
+
+        .list-product-image {
+          img{
+            width: 150px; /* Largeur fixe */
+            height: 150px; /* Hauteur fixe */
+            object-fit: cover;
+            border-radius: 15%;
+              
+          }
+        }
+
+      }
+
+      .list-property {
+        display: flex;
+        flex-direction: column;
+        
+
+        .list-column-info {
+            
+          display: flex;
+          flex-direction: row;
+          align-items: baseline;
+          justify-content: space-between;
+          font-weight: bolder;
+
+          h3 {
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            white-space: nowrap;
+            max-width: 150px;
+          }
+        }
+
+        .list-quantity {
+            padding-top: 20%;
+
+        }
+      }
+
+      .list-delete {
+          justify-self: center;
+          color: gray;
+          
+      }
+
+        
+        
+    }
+      
+    }
+  }
+
+  .current-procurement{
+    width: 800px; 
+    margin-top: 50px;
+    margin-bottom: 100px;
+    justify-self: center;
+
+    .validate {
+      margin-top: 5%;
+    }
+    .amount {
+      margin-top: 5%;
+      a{
+        justify-self: center;
+        font-weight: bolder;
+        font-size: x-large;
+      }
+        
+    }
+
+    
+
+    .procurement {
+      display: grid;
+      justify-self: center; 
+      border-bottom: solid 1px gray;
+      background-color: white;
+      box-shadow: -4px 7px 26px 0px rgba(0,0,0,0.1);
+      padding-inline: 5%;
+      padding-top: 2%;
+      padding-bottom: 3%;
+      margin-top: 10%;
+      transform: scale(1);
+      transition: transform 0.2s ease;
+      &:hover {
+        transform: scale(1.05);
+          
+      }
+      .procurement-property {
+        margin: 10px;
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(3, 0.5fr);
+        .column-image {
+          .product-image {
+            img{
+              width: 150px; 
+              height: 150px; 
+              object-fit: cover;
+              border-radius: 15%;    
+            }
+          }
+        }
+
+        .property {
+          display: flex;
+          flex-direction: column;
+          
+
+          .column-info {
+            .name {
+              h3 {
+                font-weight: bolder;
+                overflow: hidden; 
+                text-overflow: ellipsis; 
+                white-space: nowrap;
+                max-width: 150px;
+                cursor: pointer;
+                
+              } 
+            }
+            display: flex;
+            flex-direction: row;
+            align-items: baseline;
+            justify-content: space-between;
+                
+          }
+
+          .quantity {
+            padding-top: 20%;
+
+          }
+        }
+
+        .delete {
+          font-size: x-large;
+          justify-self: right;
+          a{
+            color: red;
+          }
+        }            
+      }
+    }
+  }
+
+  .house {
+    margin-block: 80px;
+    
+    width: 1200px;
+    gap: 20px;
+    justify-self: center;
+    .house-detail {
+        padding-top: 60px;
+        padding-bottom: 60px;
+        display: grid;
+        box-shadow: -9px 16px 17px 0px rgba(0,0,0,0.1);
+
+        .manage {
+          justify-self: center;
+        }
+
+        .house-title {
+          justify-self: center;
+          font-weight: bolder;
+          font-size: xx-large;
+          color: $color2;
+        }
+        
+        .house-image {
+          justify-self: center;
+          img{
+              width: 700px; 
+              height: 250px; 
+              object-fit: cover;
+          }
+          
+        }
+    
+        .house-description {
+          max-width: 60%;
+          justify-self: center;
+          p {
+              font-size: large;
+          }
+        }
+    }
+  }
+
+  .product-list {
+    margin-top: 80px;
+    margin-bottom: 80px;
+    margin-inline: auto;
+    max-width: 1200px;
+    display: grid;
+    justify-items: center;
+    grid-template-columns: repeat(max(4), minmax(250px, 1fr)); /* Utilisez auto-fill pour ajuster le nombre de colonnes en fonction de la largeur de l'écran */
+    gap: 40px;
+  
+    .product-limit {
+        box-shadow: -4px 7px 26px 0px rgba(0,0,0,0.1);
+        padding-top: 5%;
+        padding-bottom: 5%;
+        padding-inline: 11%;
+        border-bottom: solid 1px #386d5d;
+        background-color: white;
+        transform: scale(1);
+        transition: transform 0.2s ease;
+        &:hover {
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+  
+    }
+  
+    .product {
+      text-decoration: none;
+      padding-top: 8%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  
+      .product-image {
+        img{
+          width: 250px;
+          height: 250px; 
+          object-fit: cover;
+          border-radius: 30px;
+        } 
+      }
+  
+      .product-title {
+        font-weight: bolder;
+        color: $color2;
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+        white-space: nowrap;
+        max-width: 200px;
+      }
+  
+      .product-price {
+        font-weight: bolder;
+        color: $color2;
+      }
+    }
+  
+    .button {
+      display: grid;
+      justify-content: center;
+    }
+  }
+
+}
+
+
+/*** HOUSE ****/
+
+
+
+@media screen and (max-width: 1200px) {
+  .content {
+    
+  }
+
+  .house-detail-admin {
+    .house-element-edit {
+      .house-image {
+        img{
+          width: 600px; 
+          height: 250px; 
+          object-fit: cover;
+        }
+      }
+    }
+  }
+
+  .product-content {
+    .current-procurement{
+      width: 600px; 
+      
+    } 
+
+    .house {
+      max-width: 800px;
+
+      .house-detail {
+          .house-image {
+            img{
+              width: 600px; 
+              height: 250px; 
+              object-fit: cover;
+            }
+          }
+      }
+    }
+    .product-list {
+      max-width: 800px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 80px; 
+    } 
+  }
+ 
+}
+
+@media screen and (max-width: 800px) {
+  .content {
+    
+  }
+
+  .house-detail-admin {
+    .house-element-edit {
+      .house-image {
+        img{
+          width: 400px; 
+          height: auto; 
+          object-fit: cover;
+        }
+      }
+    }
+  }
+
+  .product-content {
+
+    .list-procurement{
+      width: 300px; 
+
+      .list-manage {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      
+  
+      .list-procurement-content {
+          
+       
+        
+        
+        .list-procurement-property {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          .list-column-image {
+            margin-top: 8px;
+
+            .list-product-image {
+              img{
+                width: 150px;
+                height: 150px;
+              }
+            }
+    
+          }
+          .list-property {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .list-column-info {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              
+            }
+            .list-quantity {
+              padding-top: 10px;
+
+            }
+          }     
+        }
+      }
+    }
+    .current-procurement{
+      width: 300px; 
+      .procurement {
+        display: grid;
+        justify-self: center; 
+        margin-top: 10%;
+        padding-block: 20px;
+        .delete {
+          font-size: large;     
+          position: absolute;
+          left: 260px;
+          bottom: 440px;   
+        }
+        
+      .procurement-property {
+        margin: 30px;
+        display: flex;
+        flex-direction: column;
+        .column-image {
+            
+          align-self: center;
+          .product-image {
+            img{
+              width: 200px;
+              height: 200px; 
+              object-fit: cover;
+              border-radius: 15%;
+                
+            }
+          }
+
+        }
+
+        .property {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .column-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-weight: bolder;
+            margin-top: 20px;
+
+            h3 {
+            
+              overflow: hidden; 
+              text-overflow: ellipsis; 
+              white-space: nowrap;
+              max-width: 150px;
+              cursor: pointer;
+              
+            }
+          } 
+        }
+
+          
+
+          
+          
+      }
+
+      }
+        
+    } 
+
+    .house {
+      max-width: 600px;
+
+      .house-detail {
+        .house-image {
+          img{
+            width: 400px; 
+            height: auto; 
+            object-fit: cover;
+          }
+        }
+        .manage {
+          justify-self: center;
+          .style-button {
+              margin-inline: 10px;  
+          }
+        } 
+      }
+    }
+      .product-list {
+        max-width: 600px;    
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+  }
+  .input-base {
+    width: 300px;
+ }
+  
+}
+
+@media screen and (max-width: 600px) {
+  .content {
+    
+  }
+
+  .house-detail-admin {
+    .house-element-edit {
+      .house-image {
+        img{
+          width: 200px; 
+          height: auto; 
+          object-fit: cover;
+        }
+      }
+    }
+  }
+
+  .product-detail {
+    .product-element-edit {
+      justify-self: center;
+      margin-bottom: 3vh;
+      .product-image {
+        img{
+          width: 200px;
+          height: 200px;
+          object-fit: cover;
+          border-radius: 15%;
+            
+        }
+          
+      }
+        
+    }
+    
+  }
+
+  .product-content {
+    .house {
+      max-width: 350px;
+      grid-template-columns: 1fr;
+      .house-title {
+        h2 {
+          overflow: hidden; 
+          text-overflow: ellipsis; 
+          white-space: nowrap;
+          max-width: 300px;
+        }
+        
+      }
+      .house-detail {
+        .house-image {
+          display: none;
+        }
+
+        .house-description {
+          p{
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            white-space: nowrap;
+            max-width: 200px;
+          }
+          
+          }
+
+          
+      }
+      
+    }
+    .product-list {
+      max-width: 80%;
+      grid-template-columns: 1fr; 
+    } 
+  }
+
+  .input-base {
+    width: 200px;
+  }
+  
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: "Avenir Next", sans-serif; }

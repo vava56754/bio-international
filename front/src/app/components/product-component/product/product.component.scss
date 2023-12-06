@@ -1,0 +1,50 @@
+.product-content {
+
+    .filter-title {
+        margin: 30px;;
+        display: grid;
+        justify-self: center;
+        h2 {
+            color: gray;
+        }
+    }
+
+    .filter-product {
+        justify-self: center;
+        max-width: 1200px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border: 4px;
+        border-bottom: 2px #386d5d;
+        justify-items: center;
+        gap: 80px;
+    }
+
+    .product-list {
+        .product-limit {
+            .product {
+                .product-image {
+                  img {
+                    width: 210px;
+                    height: 210px;
+                  }
+                }   
+            }
+        }
+    }
+
+}
+
+@media screen and (max-width: 800px) {
+    .product-content {
+       
+        .filter-product {
+            max-width: 600px;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 20px;
+            border: 4px;
+            border-bottom: 2px #386d5d;
+            justify-self: center;
+        }
+    }    
+}

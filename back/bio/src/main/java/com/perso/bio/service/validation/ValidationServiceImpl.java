@@ -6,6 +6,7 @@ import com.perso.bio.model.user_management.User;
 import com.perso.bio.model.user_management.Validation;
 import com.perso.bio.repository.ValidationRepository;
 import com.perso.bio.service.notification_user.NotificationUserService;
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,7 +32,7 @@ public class ValidationServiceImpl implements ValidationService {
         this.notificationUserService = notificationUserService;
     }
 
-    public void register(User user) {
+    public void register(User user) throws MessagingException {
         Validation validation = new Validation();
         validation.setUser(user);
 

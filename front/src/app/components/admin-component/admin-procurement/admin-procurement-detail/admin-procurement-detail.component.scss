@@ -1,0 +1,158 @@
+
+.current-procurement{
+    width: 700px; 
+    margin-block: 80px;
+    justify-self: center;
+    
+    .amount {
+        margin-top: 5%;
+        a{
+            justify-self: center;
+            font-weight: bolder;
+            font-size: x-large;
+        }
+        
+    }
+   
+
+
+    
+
+
+    .procurement {
+        display: grid;
+        justify-self: center; 
+        border-bottom: solid 1px gray;
+        .procurement-property {
+            margin: 4%;
+            display: grid;
+
+            grid-template-columns: repeat(3, 0.5fr);
+            grid-auto-columns: 0.5fr 3fr 1fr;
+    
+            .column-image {
+                
+
+                .product-image {
+                    img{
+                        width: 150px; /* Largeur fixe */
+                        height: 150px; /* Hauteur fixe */
+                        object-fit: cover;
+                        border-radius: 15%;
+                       
+                    }
+                }
+    
+            }
+
+            .property {
+                display: flex;
+                flex-direction: column;
+                
+
+                .column-info {
+                    
+                    display: flex;
+                    flex-direction: row;
+                    align-items: baseline;
+                    justify-content: space-between;
+                    font-weight: bolder;
+                }
+    
+                .quantity {
+                    padding-top: 20%;
+
+                }
+            }
+
+            .delete {
+                justify-self: center;
+                color: gray;
+                
+            }
+        }    
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .current-procurement {
+        max-width: 600px;    
+       
+    }
+}
+
+
+@media screen and (max-width: 700px) {
+    .content {
+        .current-procurement {
+            max-width: 400px;    
+          
+                .procurement {
+                    
+                    .procurement-property {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+              
+
+
+                        .column-image {
+                        
+        
+                            .product-image {
+                                img{
+                                    width: 150px; /* Largeur fixe */
+                                    height: 150px; /* Hauteur fixe */
+                                    object-fit: cover;
+                                    border-radius: 15%;
+                                   
+                                }
+                            }
+                
+                        }
+            
+                        .property {
+                            display: flex;
+                            flex-direction: column;
+                            
+            
+                            .column-info {
+                                
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                
+                                font-weight: bolder;
+                            }
+                
+                            .quantity {
+                                align-self: center;
+                                padding-top: 20%;
+            
+                            }
+                        }
+                        .delete {
+                            justify-self: center;
+                            color: gray;
+                            font-size: larger;
+                            
+                        }
+                    }
+    
+                  
+                }
+                .manage {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+            
+        }
+    }
+   
+}
+
+.input-base {
+    width: 50px;
+}
+

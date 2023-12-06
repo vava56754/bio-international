@@ -1,0 +1,22 @@
+<div class="content">
+  <app-picture-content [title]="'Connexion'" [src]="'../../assets/wallpaper/green-white.jpg'"></app-picture-content>
+  <div class="login-content">
+    <form (ngSubmit)="login()" class="form-login">
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+      <label>Nom d'utilisateur</label>
+      <input id="username-login" type="text" name="username-login" required [(ngModel)]="username" class="input-base"/> 
+      <label>Mot de passe</label>
+      <input id="password-login" type="password" name="password-login" required [(ngModel)]="password" class="input-base"/>
+      <button type="submit" class="style-button">Connexion</button>
+    </form>
+    <div class="sign-up">
+      <a>Pas encore de compte ?</a>
+      <a routerLink="/sign-up">Inscrivez vous ici !</a>
+    </div>
+
+  </div>
+  
+</div>
+
+
+

@@ -4,6 +4,7 @@ import com.perso.bio.model.user_management.User;
 import com.perso.bio.repository.UserRepository;
 import com.perso.bio.service.user.UserServiceImpl;
 import com.perso.bio.service.validation.ValidationServiceImpl;
+import jakarta.mail.MessagingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,7 +39,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-     void testCreatedUserValid() {
+     void testCreatedUserValid() throws MessagingException {
         User user = new User();
         user.setUserMail("mock@gmail.com");
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> {

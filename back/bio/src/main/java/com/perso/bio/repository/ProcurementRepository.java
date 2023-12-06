@@ -12,9 +12,11 @@ import java.util.Optional;
 @Repository
 public interface ProcurementRepository extends JpaRepository<Procurement, Integer> {
 
-    Optional<List<Procurement>> findAllProcurementByUser(User user);
+    Optional<List<Procurement>> findAllProcurementByUserOrderByProcurementDateDesc(User user);
 
     Optional<Procurement> findProcurementByUserAndProcurementState(User user, ProcurementState procurementState);
 
-    Optional<List<Procurement>> findAllProcurementByUserAndProcurementState(User user, ProcurementState procurementState);
+    Optional<List<Procurement>> findAllProcurementByUserAndProcurementStateOrderByProcurementDateDesc(User user, ProcurementState procurementState);
+
+    Optional<List<Procurement>> findAllProcurementByProcurementStateOrderByProcurementDateDesc(ProcurementState procurementState);
 }

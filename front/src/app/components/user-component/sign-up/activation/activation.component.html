@@ -1,0 +1,12 @@
+<div class="content">
+    <app-picture-content [title]="'Activation du compte'" [src]="'../../assets/wallpaper/green-white.jpg'"></app-picture-content>
+    <form  (ngSubmit)="activate()" class="form-activation">
+        <label for="code">Code</label>
+        <input id="code" type="text" name="code" required [(ngModel)]="code" class="input-base"/> 
+        <small>le code s'expire au bout de dix minutes</small>
+
+        <div class="button">
+            <button type="submit" class="style-button">Activer mon compte</button>
+        </div>
+    </form>
+</div>

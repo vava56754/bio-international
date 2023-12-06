@@ -1,0 +1,85 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+networks:
+  my_network:
+    driver: bridge
+
+
+services:
+  app:
+    image: 'docker-spring-boot-postgres:latest'
+    build:
+      context: .
+    container_name: app
+    volumes:
+      - ../resources/images:/app/images
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    networks:
+      - my_network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/biospring
+      SPRING_DATASOURCE_USERNAME: springuser
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      SPRING_JPA_SHOW_SQL: true
+      SPRING_MAIL_HOST: smtp4dev
+      SPRING_MAIL_PORT: 25
+      SPRING_MAIL_PROTOCOL: smtp
+      SERVER_SERVLET_CONTEXT_PATH: /api
+      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY: DEBUG
+
+  db:
+    image: postgres:latest
+    container_name: db
+    environment:
+      POSTGRES_DB: biospring
+      POSTGRES_USER: springuser
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - my_network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: your_email@example.com
+      PGADMIN_DEFAULT_PASSWORD: your_password
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    networks:
+      - my_network
+
+  smtp4dev:
+    container_name: smtp4dev
+    image: rnwood/smtp4dev:v3
+    restart: always
+    ports:
+      - '5000:80'
+      - '25:25'
+      - '143:143'
+    networks:
+      - my_network
+
+  angular:
+    build:
+      context: ../../../../../front
+    container_name: angular
+    ports:
+      - "4200:4200"
+    networks:
+      - my_network
+    depends_on:
+      - app
+
+volumes:
+  postgres-data:

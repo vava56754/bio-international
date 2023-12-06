@@ -1,0 +1,37 @@
+
+<div class="product-content">
+    <app-picture-content [title]="'Management Maisons'" [src]="'../../assets/wallpaper/house.jpg'"></app-picture-content>
+    <div class="create">
+        <button (click)="goCreateHouse()" class="style-button">Ajouter une maison</button>
+
+    </div>
+    <div *ngIf="houses"  class="house">
+        <div *ngFor="let house of houses" class="house-detail">
+
+            <div class="house-title">
+                <h2 >{{ house.houseName }}</h2>
+            </div>  
+            <div *ngIf="house.houseImageUrl" class="house-image">
+                <img [src]="house.houseImageUrl" alt="House Image">
+            </div>
+            <div class="house-description">
+                <p >{{ house.houseDescription}}</p>
+            </div>
+            <div class="manage">
+                <button (click)="goToHouseDetail(house.houseId)" class="style-button">Modifier</button>
+                <button (click)="openDeleteConfirmationHouse(house.houseId)" class="style-button">Supprimer</button>
+            </div>
+            
+        </div>
+
+    </div>
+    <div *ngIf="houses.length == 0" class="empty">
+        <i class="fa-solid fa-house"></i>
+        <h2>There is no house</h2>
+    </div>
+    <app-notification></app-notification>
+
+    
+</div>
+    
+

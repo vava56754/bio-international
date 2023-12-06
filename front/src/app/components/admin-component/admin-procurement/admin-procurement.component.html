@@ -1,0 +1,46 @@
+<div class="content">
+    <div class="current-procurement" *ngIf="validateProcurementList != []" >
+        <div><h1>Commande à valider</h1></div>
+        <div *ngFor="let validateProcurement of validateProcurementList"  class="old-procurement">
+            <h2> Commande N°{{validateProcurement.procurementId}}</h2>
+            <a (click)="goToProcurementDetail(validateProcurement.procurementId)" *ngFor="let line of validateProcurement.lineProcurementList" class="procurement">
+                <div class="procurement-property">
+                    <div class="column-image">
+                        <div *ngIf="line.product.productImageUrl" class="product-image">
+                            <img [src]="line.product.productImageUrl" alt="Product Image">
+                        </div>
+                    </div>
+                    <div class="property">
+                        <div class="column-info">
+                            <div>
+                                <h3>{{line.product.productName}}</h3>
+                            </div>
+                            <div>
+                                <a>{{line.lineUnitPrice}}€</a>
+                            </div>
+                        </div>
+                        <div class="list-quantity">
+                            <a>quantité : {{line.lineQuantity}}</a>
+                        </div>
+                       
+                    </div>
+                    <div></div>
+                </div>
+            </a>
+            <div  class="amount">
+                <a>Total : </a>
+                <a>{{validateProcurement.amount}}€</a>
+            </div>
+            <div class="manage">
+                <button (click)="goToProcurementDetail(validateProcurement.procurementId)" class="style-button">Voir</button>
+                <button (click)="completeProcurement(validateProcurement)" class="style-button">Valider</button>
+                <button (click)="openDeleteConfirmationProcurement(validateProcurement.procurementId)" class="style-button">Supprimer</button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="validateProcurementList[0] == null" class="empty">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <h2>No Order Here</h2>
+    </div>
+    <app-notification></app-notification>
+</div>

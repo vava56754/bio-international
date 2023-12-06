@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.security.*;
 import java.time.Instant;
@@ -78,7 +79,8 @@ public class JwtService {
 
         final Map<String, Object> claims = Map.of(Field.NOM, userDetails.getUsername(),
                 Claims.EXPIRATION, new Date(expirationTime),
-                Claims.SUBJECT, userDetails.getUsername());
+                Claims.SUBJECT, userDetails.getUsername(),
+                "role", ((User) userDetails).getRole().getRoleName());
 
         final String token = Jwts.builder()
                 .issuedAt(new Date(currentTime))

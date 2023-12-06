@@ -7,6 +7,7 @@ public final class Field {
     public static final String USER = "user";
     public static final String USER_ID = "user_id";
     public static final String NOM = "nom";
+    public static final  String USER_TABLE = "user_table";
 
     /*** PRODUCT ***/
     public static final String PRODUCT = "product";
@@ -55,6 +56,9 @@ public final class Field {
     /*** USER CONTROLLER ***/
     public static final String LOGOUT = "Déconnecté";
     public static final String ACTIVATE = "Activé";
+
+    /*** NOTIFICATION USER SERVICE ***/
+    public static final String ADMIN_MAIL = "no-reply@bio-international.com";
 
 
 
