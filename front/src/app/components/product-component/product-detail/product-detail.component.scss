@@ -1,0 +1,126 @@
+$color2 :rgb(38, 97, 89);
+$font :"AvenirNextLTW04-Light";
+
+
+.product {
+    max-width: 1200px;
+    padding-block: 64px;
+    margin-block: 24px;
+    justify-self: center;
+    background-color: white;
+    box-shadow: -4px 7px 26px 0px rgba(0,0,0,0.1);
+    padding-inline: 80px;
+    display: grid;
+    grid-template-rows: 1fr, 1fr;
+    .product-content {
+        display: grid;
+        grid-template-columns:  repeat(max(2), minmax(250px, 1fr));
+        gap: 40px;
+        .product-image {
+            margin: 8px;
+            img{
+                width: 350px; 
+                height: 350px; 
+                object-fit: cover;
+            }
+        }
+    
+        .product-info {
+            display: grid;
+            row-gap: 1fr, 1fr, 1fr;
+            .product-title {
+                font-weight: bolder;
+                color: $color2;
+            }
+    
+            .product-price {
+                font-weight: bolder;
+                color: $color2;
+            }
+    
+        }
+
+    }
+
+    .product-description {
+        border-top: solid 2px green;
+        padding: 10px; 
+    }
+    
+    .product-description h3 {
+        color: $color2; 
+        font-weight: bold;
+    }
+    
+    .product-description p {
+        text-align: justify;
+        font-size: 16px; 
+        max-width: 100%; 
+        margin: 0;
+    }
+
+   
+}
+
+@media screen and (max-width: 880px) {
+    .content {
+        display: grid;
+        grid-template-rows: 1fr auto;
+    
+        .product {
+            display: grid;
+            grid-template-rows: 1fr, auto;
+            .product-description {
+                p {
+                    text-align: justify;
+                    max-width: auto;
+                    justify-self: center;
+                    font-size: large;
+                    text-align: left;
+                    width: auto;
+                    
+                }
+            }
+            .product-content {
+                grid-template-columns:  repeat(1, minmax(0, 1fr));
+                justify-items: center;
+                
+                .product-info {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    .product-title {
+                        align-self: center;
+                    }
+                    
+                    .quantity {
+                        align-self: center;
+                    }
+            
+                }
+            }
+        }
+    }
+    
+}
+
+.productEmpty {
+    display: grid;
+    justify-content: center;
+    grid-template-rows: 3fr 1fr;
+    padding: 8%;
+    i {
+        color: gray;
+        font-size: 400px;
+    }
+    h2 {
+        padding-top: 20%;
+        color: gray;
+        text-align: center;
+        font-family: $font;
+    }
+}
+
+.input-base {
+    width: 50px;
+}

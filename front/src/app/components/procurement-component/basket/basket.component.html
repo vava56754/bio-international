@@ -1,0 +1,50 @@
+<div class="product-content">
+    <div class="current-procurement">
+        <div>
+            <h1>Panier</h1>
+        </div>
+        <div *ngIf="procurement.userId && procurement.procurementId != 0 && procurement.amount != 0 && procurement.lineProcurementList != []">
+            <div *ngFor="let line of procurement.lineProcurementList" class="procurement">
+                <div class="procurement-property">
+                    <div class="column-image">
+                        <div *ngIf="line.product.productImageUrl" class="product-image">
+                            <img [src]="line.product.productImageUrl" alt="Product Image">
+                        </div>
+                    </div>
+                    <div class="property">
+                        <div class="column-info">
+                            <div class="name">
+                                <h3 (click)="goToProductDetail(line.product.productId)">{{line.product.productName}}</h3>
+                            </div>
+                            <div> 
+                                <a>{{line.lineUnitPrice}}€</a>
+                            </div>
+                            
+                        </div>
+                        <div class="quantity">
+                            <input *ngIf="line.product.productStock < 10" type="number" [(ngModel)]="line.lineQuantity" [ngModelOptions]="{standalone: true}" required="true"class="input-base" (change)="updateLineProcurement(line)" min="0" max="{{line.product.productStock}}">
+                            <input *ngIf="line.product.productStock >= 10" type="number" [(ngModel)]="line.lineQuantity" [ngModelOptions]="{standalone: true}" required="true"class="input-base" (change)="updateLineProcurement(line)" min="0" max="10">
+                        </div>
+                    </div>
+                    <div class="delete"><a (click)="deleteLineProcurement(line.lineId)" class="fa-solid fa-xmark"></a></div>
+                </div>
+                
+            </div>
+            <div class="amount">
+                <a>Total : </a>
+                <a>{{procurement.amount}}€</a>
+            </div>
+            <div class="validate">
+                <button (click)="openValideConfirmationProcurement()" class="style-button" >Valider</button>
+            </div>
+        </div>
+        <div *ngIf="procurement.procurementId == 0 || procurement.amount == 0 || !procurement.procurementId" class="empty">
+            <i class="fa-solid fa-basket-shopping"></i>
+            <h2>No Order Here</h2>
+        </div>
+    </div>
+    <app-notification></app-notification>
+</div>
+<div *ngIf="loading" class="loading-overlay">
+    <p>Chargement en cours...</p>
+</div>

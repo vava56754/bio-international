@@ -1,0 +1,64 @@
+$color2 :rgb(38, 97, 89);
+
+
+footer {
+    font-family: "Avenir Next";
+    background-color: $color2;
+    display: grid;
+
+    .footerTab {
+        max-width: 1200px;
+        padding-block: 80px;
+        display: grid;
+        justify-self: center;
+        grid-template-columns: repeat(max(3), minmax(250px, 1fr));
+
+        .info {
+            display: grid;
+            justify-items: center;
+            font-size: large;
+            a {
+                margin-bottom: 32px;
+                color: white;
+                text-decoration: none;
+
+                &:visited {
+                    text-decoration: none;
+                }
+            }
+        }
+
+        .social {
+            display: grid;
+            grid-template-columns: auto auto;
+            justify-content: center;
+
+            a {
+                margin-bottom: 32px;
+                font-size: x-large;
+                padding: 10px;
+
+                i {
+                    color: white;
+                }
+            }
+        }
+
+        .credit {
+            display: grid;
+            color: white;
+            font-size: large;
+            justify-items: center;
+
+            a{
+                margin-bottom: 32px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 767px) {
+    footer .footerTab {
+        grid-template-columns: 1fr;
+    }
+}

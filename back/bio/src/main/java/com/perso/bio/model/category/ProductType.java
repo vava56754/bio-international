@@ -3,6 +3,8 @@ package com.perso.bio.model.category;
 import com.perso.bio.constants.Field;
 import com.perso.bio.model.Product;
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
 
@@ -19,7 +21,11 @@ public class ProductType {
 
     private String typeName;
 
-    @ManyToMany(mappedBy = Field.PRODUCT_TYPES)
+    @ManyToMany
+    @JoinTable(
+            name = Field.PRODUCT_PRODUCT_TYPE,
+            joinColumns = @JoinColumn(name = Field.PRODUCT_TYPE_ID),
+            inverseJoinColumns = @JoinColumn(name = Field.PRODUCT_ID))
     private List<Product> products = new ArrayList<>();
 
     public ProductType() {

@@ -1,0 +1,59 @@
+
+<div class="content">
+    <app-picture-content [title]="'Management Catégories'" [src]="'../../assets/wallpaper/product.jpg'"></app-picture-content>
+    <div class="category">
+        <div class="type">
+            <h2>TYPE DE PRODUIT</h2>
+            <div>
+                <input placeholder="nom type" [(ngModel)]="typeName" class="input-base">
+                <button (click)="createType(typeName)" class="style-button">Créer</button>
+            </div>
+    
+            <div *ngFor="let type of typeProduct; let i = index" class="element">
+                <h3>{{type.typeName}}</h3>
+                <div *ngIf="!displayTypeUpdate  || selectedTypeIndex !== i" class="manage">
+                    <button class="style-button" (click)="displayTypeInput(i)">Modifier</button>
+                    <button class="style-button" (click)="openDeleteConfirmationType(type.typeId)">Supprimer</button>
+                </div>
+                <div *ngIf="displayTypeUpdate && selectedTypeIndex === i" class="update"> 
+                    <input placeholder="nom type" [(ngModel)]="typeNameUpdate" class="input-base">
+                    <div class="manage">
+                        <button class="style-button" (click)="updateType(type.typeId, typeNameUpdate, i)">Confirmer</button>
+                        <button class="style-button" (click)="displayTypeInput(i)">Annuler</button>
+                    </div>
+                </div>
+                
+            </div>
+    
+        </div>
+        <div class="body">
+            <h2>PARTIE DU CORPS</h2>
+            <div>
+                <input placeholder="nom partie" [(ngModel)]="bodyName" class="input-base">
+                <button (click)="createBody(bodyName)" class="style-button">Créer</button>
+            </div>
+            <div *ngFor="let body of bodys; let i = index"  class="element">
+                <h3>{{body.bodyName}}</h3>
+                <div *ngIf="!displayBodyUpdate  || selectedBodyIndex !== i" class="manage">
+                    <button class="style-button" (click)="displayBodyInput(i)">Modifier</button>
+                    <button class="style-button" (click)="openDeleteConfirmationBody(body.bodyId)">Supprimer</button>
+                </div>
+                
+                <div *ngIf="displayBodyUpdate && selectedBodyIndex === i" class="update">
+                    <input placeholder="nom partie" [(ngModel)]="bodyNameUpdate" class="input-base">
+                    <div class="manage">
+                        <button class="style-button" (click)="updateBody(body.bodyId, bodyNameUpdate, i)">Confimer</button>
+                        <button class="style-button" (click)="displayBodyInput(i)">Annuler</button>
+                    </div>
+                    
+                </div>
+                
+            </div>
+    
+        </div>
+    </div>
+    
+    
+</div>
+<app-notification></app-notification>
+

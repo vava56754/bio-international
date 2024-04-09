@@ -1,6 +1,8 @@
 package com.perso.bio.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perso.bio.constants.MessageConstants;
 import com.perso.bio.model.House;
 import com.perso.bio.service.house.HouseService;
@@ -19,15 +21,19 @@ import java.util.List;
 public class HouseController {
 
     private final HouseService houseService;
-
+    private final ObjectMapper objectMapper;
+    //private static final org.slf4j.Logger log = LoggerFactory.getLogger(HouseController.class);
     @Autowired
-    public HouseController(HouseService houseService) {
+    public HouseController(HouseService houseService, ObjectMapper objectMapper) {
         this.houseService = houseService;
+        this.objectMapper = objectMapper;
     }
 
     @PostMapping(path = "/create")
-    public ResponseEntity<String> createHouse(@RequestPart("file") MultipartFile file, @RequestPart("house") House house) throws FileNotFoundException {
-        this.houseService.createHouse(house, file);
+    public ResponseEntity<String> createHouse(@RequestPart("File") MultipartFile file, @RequestPart("house") String house) throws FileNotFoundException, JsonProcessingException {
+        House houseObj;
+        houseObj = objectMapper.readValue(house, House.class);
+        this.houseService.createHouse(houseObj, file);
         return new ResponseEntity<>(MessageConstants.CREATE, HttpStatus.CREATED);
     }
 
@@ -40,20 +46,22 @@ public class HouseController {
 
     @GetMapping(path = "/all")
     public ResponseEntity<List<House>> getAllHouse() {
-        List<House> houses = this.houseService.getAllHouse();
+        List<House> houses = this.houseService.getAllHouses();
         return ResponseEntity.ok(houses);
     }
 
     @PutMapping(path = "/update/{id}")
-    public ResponseEntity<String> updateHouse(@PathVariable Integer id, @RequestPart("file") MultipartFile file, @RequestPart("house") House house) throws FileNotFoundException {
-        this.houseService.updateHouse(id, house, file);
-        return new ResponseEntity<>(MessageConstants.UPDATE, HttpStatus.NO_CONTENT);
+    public ResponseEntity<String> updateHouse(@PathVariable Integer id, @RequestPart("File") MultipartFile file, @RequestPart("house") String house) throws FileNotFoundException, JsonProcessingException {
+        House houseObj;
+        houseObj = objectMapper.readValue(house, House.class);
+        this.houseService.updateHouse(id, houseObj, file);
+        return new ResponseEntity<>(MessageConstants.UPDATE, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<String> deleteHouse(@PathVariable Integer id) throws FileNotFoundException {
         this.houseService.deleteHouse(id);
-        return new ResponseEntity<>(MessageConstants.DELETE, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(MessageConstants.DELETE, HttpStatus.OK);
     }
 
 

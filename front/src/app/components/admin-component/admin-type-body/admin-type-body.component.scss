@@ -1,0 +1,60 @@
+$color2 :rgb(38, 97, 89);
+$background-color :#eeebebe7;
+$font :"AvenirNextLTW04-Light";
+
+.content {
+    grid-template-rows: 1fr auto;
+    
+    .category {
+        margin-block: 80px;
+        max-width: 1200px;
+        display: grid;
+        grid-template-columns: repeat(max(2), minmax(250px, 1fr));
+        justify-self: center;
+        justify-items: center;
+        gap: 160px;
+        .body {
+            justify-self: center;
+            
+        }
+        .type {
+            justify-self: center;
+        }
+    }
+
+    @media screen and (max-width: 1200px) {
+        .category {
+            margin-block: 80px;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: repeat(max(1), minmax(250px, 1fr));
+            
+        }
+    }
+    
+}
+
+.element {
+    box-shadow: -4px 7px 26px 0px rgba(0,0,0,0.1);
+    margin-block: 72px;
+    padding: 16px;
+    border-bottom: solid 1px green;
+    display: grid;
+
+    h3 {
+        justify-self: center;
+    }
+    .manage {
+        justify-self: center;
+        .style-button {
+            width: 90px;
+        }
+    }
+    .update {
+        display: grid;
+        justify-content: center;
+        .input-base {
+            width: 300px;
+        }
+    }
+}

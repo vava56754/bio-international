@@ -1,0 +1,51 @@
+<div class="content">
+    <app-picture-content [title]="'Inscription'" [src]="'../../assets/wallpaper/green-white.jpg'"></app-picture-content>
+    <form #inscriptionForm="ngForm" (ngSubmit)="sign(inscriptionForm)" class="form-sign">
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+        <div class="user-grid">
+            <div class="user-info">
+                <label for="userFirstName">Nom</label>
+                <input id="userFirstName" type="text" name="userFirstName" [(ngModel)]="user.userFirstName" class="input-base" required/> 
+                <label for="userSignName">Prénom</label>
+                <input id="userSignName" type="text" name="userSignName" [(ngModel)]="user.userName" class="input-base" required/>
+                <label for="userPhone">Téléphone</label>
+                <input id="userPhone" type="tel" name="userPhone" pattern="^0[1-9]([-. ]?[0-9]{2}){4}$" [(ngModel)]="user.userPhone" class="input-base" placeholder="00 00 00 00 00" required/> 
+                <div class="user-adress">
+                    <label for="userAddress">Adresse</label>
+                    <input id="userAddress" type="text" name="userAddress" [(ngModel)]="user.userAddress" class="input-base" placeholder="rue" required/>
+                    <div class="city">
+                        <div>
+                            <label for="userPostalCode">Code Postal</label>
+                            <input id="userPostalCode" type="text" name="userPostalCode" [(ngModel)]="user.userPostalCode" class="input-base" required/>
+                        </div>
+                    </div>
+                    <label for="userCountry">Pays</label>
+                    <select id="userCountry" name="userCountry" [(ngModel)]="user.userCountry" class="select-style" (change)="getCities(user.userCountry)" required>
+                        <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+                    </select>
+                    <label for="userCountry">Ville</label>
+                    <select id="userCity" name="userCity" [(ngModel)]="user.userCity" class="select-style" required>
+                        <option *ngFor="let country of cities" [value]="country">{{ country }}</option>
+                    </select>
+                </div>
+                
+            </div>
+            <div class="user-login">
+                <label for="userMail">Mail</label>
+                <input id="userMail" type="text" name="userMail" [(ngModel)]="user.userMail" class="input-base" required/> 
+                <label for="userPassword">Mot de passe</label>
+                <input id="password" type="password" name="userPassword" [(ngModel)]="user.userPassword" class="input-base" required/>
+                <label for="confirmPassword">Confirmer le mot de passe</label>
+                <input id="confirmPassword" type="password" name="confirmPassword" [(ngModel)]="confirmPassword" class="input-base" required/>
+                <div *ngIf="user.userPassword != confirmPassword && confirmPassword" class="error-message">Les mots de passe ne correspondent pas</div>
+            </div>
+
+        </div>
+        <div class="button">
+            <button type="submit" class="style-button"  [disabled]="user.userPassword !== confirmPassword || inscriptionForm.invalid">S'inscrire</button>
+        </div>
+    </form>
+</div>
+<div *ngIf="loading" class="loading-overlay">
+    <p>Chargement en cours...</p>
+</div>

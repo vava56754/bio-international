@@ -9,8 +9,10 @@ import com.perso.bio.model.category.ProductType;
 import com.perso.bio.repository.BodyPartRepository;
 import com.perso.bio.repository.ProductRepository;
 import com.perso.bio.repository.ProductTypeRepository;
+import com.perso.bio.service.jwt.JwtService;
 import com.perso.bio.service.storage.FilesStorageService;
 import jakarta.persistence.EntityNotFoundException;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,8 @@ import java.util.Optional;
 @Service
 @Qualifier("jpa")
 public class ProductServiceImpl implements ProductService {
+
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     FilesStorageService filesStorageService;
 
@@ -48,6 +52,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void createProduct(Product product, MultipartFile file) throws FileNotFoundException {
+        if (product.getProductStock() < 1 || product.getProductUnitPrice() < 1) {
+            throw new IllegalArgumentException(MessageConstants.PRODUCT_SERVICE_QUANTITY_PRICE_ERROR);
+        }
         saveFile(product, file);
         if (product.getProductTypes() != null) {
             setProductTypeForProduct(product);
@@ -56,6 +63,7 @@ public class ProductServiceImpl implements ProductService {
         if (product.getBodyParts() != null) {
             setBodyPartForProduct(product);
         }
+        product.setVisible(true);
         this.productRepository.save(product);
     }
 
@@ -75,22 +83,73 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductByTypeAndBodyPart(Integer typeId, Integer bodyId) {
-        if (typeId != -1 && bodyId != -1) {
-            return this.productRepository.findByProductTypesTypeIdAndBodyPartsBodyId(typeId, bodyId);
-        } else if (typeId != -1) {
-            return productRepository.findByProductTypesTypeId(typeId);
-        } else if (bodyId != -1) {
+    public Product getProductVisible(Integer productId) throws MalformedURLException {
+        Product product = this.productRepository.findByProductIdAndIsVisibleTrue(productId);
+        String url = MvcUriComponentsBuilder
+                .fromMethodCall(MvcUriComponentsBuilder
+                        .on(StorageController.class)
+                        .getFile(product.getProductLink()))
+                .build()
+                .toUriString();
+        product.setProductLink(url);
 
-            return productRepository.findByBodyPartsBodyId(bodyId);
-        } else {
-
-            return productRepository.findAll();
-        }
+        return product;
     }
 
     @Override
-    public List<Product> getAllProduct() {
+    public List<Product> searchProducts(String name) {
+        List<Product> products;
+        products = this.productRepository.findByProductNameContainingIgnoreCaseAndIsVisibleTrue(name);
+        products.forEach(product -> {
+            String url = null;
+            try {
+                url = MvcUriComponentsBuilder
+                        .fromMethodCall(MvcUriComponentsBuilder
+                                .on(StorageController.class)
+                                .getFile(product.getProductLink()))
+                        .build()
+                        .toUriString();
+            } catch (MalformedURLException e) {
+                String message = String.format("[ProductService@%s::searchProducts] Fail to get Products: %s", this.getClass().getSimpleName(), e.getMessage());
+                log.error(message);
+            }
+            product.setProductLink(url);
+        });
+        return products;
+    }
+
+    @Override
+    public List<Product> getProductsByTypeAndBodyPart(Integer typeId, Integer bodyId) {
+        List<Product> products;
+        if (typeId == -1 && bodyId == -1) {
+            products = productRepository.findByIsVisibleTrueOrderByProductNameAsc();
+        } else if (typeId != -1 && bodyId != -1) {
+            products = this.productRepository.findByProductTypesTypeIdAndBodyPartsBodyIdAndIsVisibleTrueOrderByProductNameAsc(typeId, bodyId);
+        } else if (typeId != -1) {
+            products = productRepository.findByProductTypesTypeIdAndIsVisibleTrueOrderByProductNameAsc(typeId);
+        } else {
+            products = productRepository.findByBodyPartsBodyIdAndIsVisibleTrueOrderByProductNameAsc(bodyId);
+        }
+        products.forEach(product -> {
+            String url = null;
+            try {
+                url = MvcUriComponentsBuilder
+                        .fromMethodCall(MvcUriComponentsBuilder
+                                .on(StorageController.class)
+                                .getFile(product.getProductLink()))
+                        .build()
+                        .toUriString();
+            } catch (MalformedURLException e) {
+                String message = String.format("[ProductService@%s::searchProducts] Fail to get Products: %s",this.getClass().getSimpleName(), e.getMessage());
+                log.error(message);
+            }
+            product.setProductLink(url);
+        });
+        return products;
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
         List<Product> products = this.productRepository.findAll();
         products.forEach(product -> {
             String url = null;
@@ -102,7 +161,8 @@ public class ProductServiceImpl implements ProductService {
                         .build()
                         .toUriString();
             } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
+                String message = String.format("[ProductService@%s::searchProducts] Fail to get Products: %s",this.getClass().getSimpleName(), e.getMessage());
+                log.error(message);
             }
             product.setProductLink(url);
         });
@@ -111,25 +171,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void updateProduct(Integer productId, Product product, MultipartFile file) throws FileNotFoundException {
+        if (product.getProductStock() < 0 && product.getProductUnitPrice() < 1) {
+            throw new IllegalArgumentException(MessageConstants.PRODUCT_SERVICE_QUANTITY_PRICE_ERROR);
+        }
         Optional<Product> existingProduct = this.productRepository.findById(productId);
         if (existingProduct.isPresent()) {
-            Product productUpdate = existingProduct.get();
-            productUpdate.setProductName(Optional.ofNullable(product.getProductName())
-                    .orElse(productUpdate.getProductName()));
-            productUpdate.setProductDescription(Optional.ofNullable(product.getProductDescription())
-                    .orElse(productUpdate.getProductDescription()));
-            productUpdate.setProductUnitPrice(Optional.ofNullable(product.getProductUnitPrice())
-                    .orElse(productUpdate.getProductUnitPrice()));
-            product.setProductStock(Optional.ofNullable(product.getProductStock())
-                    .orElse(productUpdate.getProductStock()));
-            productUpdate.setHouse(Optional.ofNullable(product.getHouse())
-                    .orElse(productUpdate.getHouse()));
-            productUpdate.setProductTypes(Optional.ofNullable(product.getProductTypes())
-                    .orElse(productUpdate.getProductTypes()));
-            productUpdate.setBodyParts(Optional.ofNullable(product.getBodyParts())
-                    .orElse(productUpdate.getBodyParts()));
+            Product productUpdate = getProductUpdate(product, existingProduct.get());
             product.setProductId(productId);
-            if (!file.isEmpty()) {
+            if (!"blob".equals(file.getOriginalFilename())) {
                 deleteFileForProduct(productId);
                 saveFile(productUpdate, file);
             }
@@ -138,6 +187,36 @@ public class ProductServiceImpl implements ProductService {
             throw new EntityNotFoundException(MessageConstants.PRODUCT_SERVICE_ERROR_MESSAGE + productId);
         }
 
+    }
+
+    private static Product getProductUpdate(Product product, Product productUpdate) {
+        productUpdate.setProductName(Optional.ofNullable(product.getProductName())
+                .orElse(productUpdate.getProductName()));
+        productUpdate.setProductDescription(Optional.ofNullable(product.getProductDescription())
+                .orElse(productUpdate.getProductDescription()));
+        productUpdate.setProductUnitPrice(Optional.ofNullable(product.getProductUnitPrice())
+                .orElse(productUpdate.getProductUnitPrice()));
+        productUpdate.setProductStock(Optional.ofNullable(product.getProductStock())
+                .orElse(productUpdate.getProductStock()));
+        productUpdate.setHouse(Optional.ofNullable(product.getHouse())
+                .orElse(productUpdate.getHouse()));
+        productUpdate.setProductTypes(Optional.ofNullable(product.getProductTypes())
+                .orElse(productUpdate.getProductTypes()));
+        productUpdate.setBodyParts(Optional.ofNullable(product.getBodyParts())
+                .orElse(productUpdate.getBodyParts()));
+        return productUpdate;
+    }
+
+    @Override
+    public void updateIsVisible(Integer productId) {
+        Optional<Product> existingProduct = this.productRepository.findById(productId);
+        if (existingProduct.isPresent()) {
+            Product productUpdate = existingProduct.get();
+            productUpdate.setVisible(!productUpdate.getVisible());
+            this.productRepository.save(productUpdate);
+        } else {
+            throw new EntityNotFoundException(MessageConstants.PRODUCT_SERVICE_ERROR_MESSAGE + productId);
+        }
     }
 
     @Override

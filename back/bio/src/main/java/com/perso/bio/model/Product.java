@@ -18,10 +18,13 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer productId;
     private String productName;
+
+    @Column(length = 1000)
     private String productDescription;
     private Integer productUnitPrice;
     private Integer productStock;
     private String productLink;
+    private Boolean isVisible;
 
     @ManyToOne
     @JoinColumn(name = Field.HOUSE_ID)
@@ -44,12 +47,13 @@ public class Product {
     protected Product() {
     }
 
-    public Product(String productName, String productDescription, Integer productUnitPrice, Integer productStock, String productLink) {
+    public Product(String productName, String productDescription, Integer productUnitPrice, Integer productStock, String productLink, boolean isVisible) {
         this.productName = productName;
         this.productDescription = productDescription;
         this.productUnitPrice = productUnitPrice;
         this.productStock = productStock;
         this.productLink = productLink;
+        this.isVisible = isVisible;
     }
 
     public Integer getProductId() {
@@ -122,5 +126,13 @@ public class Product {
 
     public void setBodyParts(List<BodyPart> bodyParts) {
         this.bodyParts = bodyParts;
+    }
+
+    public Boolean getVisible() {
+        return isVisible;
+    }
+
+    public void setVisible(Boolean visible) {
+        isVisible = visible;
     }
 }

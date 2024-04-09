@@ -1,0 +1,101 @@
+<div class="content">
+    <form class="product-detail">
+        <div class="product-element-edit">
+            <label>Nom</label>
+            <input id="inputName" value={{product.productName}}  readonly [(ngModel)]="updateProductName" [ngModelOptions]="{standalone: true}" class="input-base">
+            <div *ngIf="!displayProductName">
+                <button (click)="enableEditing('inputName'); toggleDisplayProperty('displayProductName')" class="style-button">Modifier</button>
+            </div>
+            <div *ngIf="displayProductName" class="field-manage"> 
+                <button (click)="setProductProperty('inputName', 'productName', this.updateProductName); toggleDisplayProperty('displayProductName')" class="style-button">Confirmer</button>
+                <button (click)="disableEditing('inputName'); toggleDisplayProperty('displayProductName'); resetProductProperty('productName');" class="style-button">Annuler</button>
+            </div>
+            
+        </div>
+        <div class="product-element-edit">
+            <label>Description</label>
+            <textarea id="inputDescription" value={{product.productDescription}} readonly [(ngModel)]="updateProductDescription" [ngModelOptions]="{standalone: true}" class="input-base"></textarea>
+            <div *ngIf="!displayProductDescription">
+                <button  (click)="enableEditing('inputDescription'); toggleDisplayProperty('displayProductDescription')" class="style-button">Modifier</button>
+            </div>
+            
+            <div *ngIf="displayProductDescription" class="field-manage"> 
+                <button (click)="setProductProperty('inputDescription', 'productDescription', this.updateProductDescription); toggleDisplayProperty('displayProductDescription')" class="style-button">Confirmer</button>
+                <button (click)="disableEditing('inputDescription'); toggleDisplayProperty('displayProductDescription'); resetProductProperty('productDescription');" class="style-button">Annuler</button>
+            </div>
+        </div>
+        <div class="product-element-edit">
+            <label>Prix</label>
+            <input type="number" id="inputPrice" value={{product.productUnitPrice}} readonly [(ngModel)]="updateProductPrice" [ngModelOptions]="{standalone: true}" class="input-base" min="1">
+            <div *ngIf="!displayProductPrice">
+                <button  (click)="enableEditing('inputPrice'); toggleDisplayProperty('displayProductPrice')" class="style-button">Modifier</button>
+            </div>
+            
+            <div *ngIf="displayProductPrice" class="field-manage"> 
+                <button (click)="setProductProperty('inputPrice', 'productUnitPrice', this.updateProductPrice); toggleDisplayProperty('displayProductPrice')" class="style-button">Confirmer</button>
+                <button (click)="disableEditing('inputPrice'); toggleDisplayProperty('displayProductPrice'); resetProductProperty('productUnitPrice');" class="style-button">Annuler</button>
+            </div>
+        </div>
+        <div class="product-element-edit">
+            <label>Quantité</label>
+            <input type="number" id="inputStock" value={{product.productStock}} readonly [(ngModel)]="updateProductStock" [ngModelOptions]="{standalone: true}" class="input-base" min="0"> 
+            <div *ngIf="!displayProductStock" class="update-button">
+                <button  (click)="enableEditing('inputStock'); toggleDisplayProperty('displayProductStock')" class="style-button">Modifier</button>
+            </div>
+            
+            <div *ngIf="displayProductStock" class="field-manage"> 
+                <button (click)="setProductProperty('inputStock', 'productStock', this.updateProductStock); toggleDisplayProperty('displayProductStock')" class="style-button">Confirmer</button>
+                <button (click)="disableEditing('inputStock'); toggleDisplayProperty('displayProductStock'); resetProductProperty('productStock');" class="style-button">Annuler</button>
+            </div>
+        </div>
+    
+        <div class="product-element-edit">
+            <label>Image</label>
+            <div *ngIf="product.productImageUrl" class="product-image">
+                <img [src]="product.productImageUrl" alt="Product Image">
+            </div>
+        <input type="file" name="file" (change)="onFileSelected($event)">
+    
+        </div>
+        
+        
+        <div class="filter-product">
+            <div>
+                <label>Maison</label>
+                <div class="house">
+                    <select    id="houseSelect" [(ngModel)]="selectedHouse" (change)="setHouseProduct()" [ngModelOptions]="{standalone: true}" class="select-style">
+                        <option *ngIf="product.house != null" value=0>{{product.house.houseName}}</option>
+                        <option *ngIf="product.house == null" value=0>aucune maison</option>
+                        <option *ngFor="let house of houses" value={{house.houseId}}>{{house.houseName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label>Type</label>
+                <div class="type">
+                    <select    id="typeSelect" [(ngModel)]="selectedType" (change)="setTypeProduct()" [ngModelOptions]="{standalone: true}" class="select-style">
+                        <option *ngIf="product.productTypes && product.productTypes.length > 0" value=0>{{product.productTypes[0].typeName}}</option>
+                        <option *ngIf="!product.productTypes || product.productTypes.length === 0" value=0>aucun type</option>
+                        <option *ngFor="let type of types" value="{{type.typeId}}">{{type.typeName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label>Partie Corps</label>
+                <div class="body">
+                    <select id="product.body[0]" [(ngModel)]="selectedBody" (change)="setBodyProduct()" [ngModelOptions]="{standalone: true}" class="select-style">
+                        <option *ngIf="product.bodyParts && product.bodyParts.length > 0" value=0>{{product.bodyParts[0].bodyName}}</option>
+                        <option *ngIf="!product.bodyParts || product.bodyParts.length === 0" value=0>aucune partie</option>
+                        <option *ngFor="let body of bodys" value="{{body.bodyId}}">{{body.bodyName}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="manage">
+            <button (click)="updateProduct()" class="style-button">Enregistrer</button>
+            <button (click)="cancel()" class="style-button">Annuler</button>
+        </div>
+    </form>
+    <app-notification></app-notification>
+</div>
+

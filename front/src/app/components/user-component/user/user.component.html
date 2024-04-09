@@ -1,0 +1,137 @@
+<div class="content">
+    <app-picture-content [title]="'Mon compte'" [src]="'../../assets/wallpaper/green-white.jpg'"></app-picture-content>
+    <form class="form-user">
+        <div class="info">
+            <div class="user-element-edit">
+                <label for="inputName">Nom</label>
+                <input id="inputName" value={{user.userName}}  readonly [(ngModel)]="userUpdate.userName" [ngModelOptions]="{standalone: true}" class="input-base">
+                <div *ngIf="!displayUserName">
+                    <button (click)="enableEditing('inputName');toggleDisplayProperty('displayUserName')" class="style-button">Modifier</button>
+                </div>
+                <div *ngIf="displayUserName" class="manage"> 
+                    <button (click)="setUserProperty('inputName','userName', userUpdate.userName);toggleDisplayProperty('displayUserName')" class="style-button">Confirmer</button>
+                    <button (click)="disableEditing('inputName');toggleDisplayProperty('displayUserName');resetUserProperty('userName');" class="style-button">Annuler</button>
+                </div>
+                
+            </div>
+            <div class="user-element-edit">
+                <label for="inputFirstName">Prenom</label>
+                <input id="inputFirstName" value={{user.userFirstName}}  readonly [(ngModel)]="userUpdate.userFirstName" [ngModelOptions]="{standalone: true}" class="input-base">
+                <div *ngIf="!displayUserFirstName">
+                    <button (click)="enableEditing('inputFirstName');toggleDisplayProperty('displayUserFirstName')" class="style-button">Modifier</button>
+                </div>
+                <div *ngIf="displayUserFirstName" class="manage"> 
+                    <button (click)="setUserProperty('inputFirstName','userFirstName',userUpdate.userFirstName);toggleDisplayProperty('displayUserFirstName')" class="style-button">Confirmer</button>
+                    <button (click)="disableEditing('inputFirstName');toggleDisplayProperty('displayUserFirstName');resetUserProperty('userFirstName');" class="style-button">Annuler</button>
+                </div>
+                
+            </div>
+    
+            <div class="user-element-edit">
+                <label for="inputPhone">Telephone</label>
+                <input id="inputPhone" value={{user.userPhone}}  readonly [(ngModel)]="userUpdate.userPhone" [ngModelOptions]="{standalone: true}" class="input-base">
+                <div *ngIf="!displayUserPhone">
+                    <button (click)="enableEditing('inputPhone');toggleDisplayProperty('displayUserPhone')" class="style-button">Modifier</button>
+                </div>
+                <div *ngIf="displayUserPhone" class="manage"> 
+                    <button (click)="setUserProperty('inputPhone','userPhone',userUpdate.userPhone);toggleDisplayProperty('displayUserPhone')" class="style-button">Confirmer</button>
+                    <button (click)="disableEditing('inputPhone');toggleDisplayProperty('displayUserPhone');resetUserProperty('userPhone');" class="style-button">Annuler</button>
+                </div>
+                
+            </div>
+
+            <div class="user-element-edit">
+                <label for="inputMail">Email</label>
+                <input id="inputMail" value={{user.userMail}}  readonly [(ngModel)]="userUpdate.userMail" [ngModelOptions]="{standalone: true}" class="input-base">
+                <div *ngIf="!displayUserMail">
+                    <button (click)="enableEditing('inputMail');toggleDisplayProperty('displayUserMail')" class="style-button">Modifier</button>
+                </div>
+                <div *ngIf="displayUserMail" class="manage">
+                    <p>Si vous modifier votre email vous serez déconnecté</p>
+                    <p>Vous devrez vous connecté avec la nouvelle adresse email</p>
+                    <button (click)="setUserProperty('inputMail','userMail',userUpdate.userMail);toggleDisplayProperty('displayUserMail')" class="style-button">Confirmer</button>
+                    <button (click)="disableEditing('inputMail');toggleDisplayProperty('displayUserMail');resetUserProperty('userMail');" class="style-button">Annuler</button>
+                </div>
+                
+            </div>
+
+        </div>
+        
+        <div class="address">
+            <div>
+                
+                
+                <div class="user-element-edit">
+                    <label for="inputAdressInput">Adresse</label>
+                    <input id="inputAdressInput" #inputAdressInput value={{user.userAddress}}  readonly [(ngModel)]="userUpdate.userAddress" [ngModelOptions]="{standalone: true}" class="input-base">
+                </div>
+                <div class="user-element-edit">
+                    <label for="inputCodeInput">Code Postal</label>
+                    <input id="inputCodeInput" #inputCodeInput value={{user.userPostalCode}}  readonly [(ngModel)]="userUpdate.userPostalCode" [ngModelOptions]="{standalone: true}" class="input-base">
+                    
+                </div>
+                <div *ngIf="!displayUserAdress">
+                    <div class="user-element-edit">
+                        <label for="inputCountryInput">Pays</label>
+                        <input id="inputCountryInput" #inputAdressInput value={{user.userCountry}}  readonly class="input-base">
+                    </div>
+                    <div class="user-element-edit">
+                        <label for="inputCityInput">Ville</label>
+                        <input id="inputCityInput" #inputCodeInput value={{user.userCity}}  readonly class="input-base">
+                        
+                    </div>
+                </div>
+                
+            </div>
+            <div *ngIf="!displayUserAdress">
+                <button (click)="enableAllEditing([inputAdressInput,inputCodeInput]);toggleDisplayProperty('displayUserAdress')" class="style-button">Modifier</button>
+            </div>
+            <div *ngIf="displayUserAdress" > 
+                <div class="user-element-edit">
+                    <label for="userCountry">Pays :</label>
+                    <select id="userCountry" name="userCountry" [(ngModel)]="userUpdate.userCountry" class="select-style" (change)="getCities(userUpdate.userCountry)" readonly required>
+                        <option *ngIf="user.userCountry != null" value=0>{{user.userCountry}}</option>
+                        <option *ngIf="user.userCountry == null" value=0>aucun pays</option>
+                        <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+                    </select>
+                </div>
+                <div class="user-element-edit">
+                    <label for="userCity">Ville :</label>
+                    <select id="userCity" name="userCity" [(ngModel)]="userUpdate.userCity" class="select-style" readonly required>
+                        <option *ngIf="user.userCity != null" value=0>{{user.userCity}}</option>
+                        <option *ngIf="user.userCity == null" value=0>aucune ville</option>
+                        <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+                    </select>
+                </div>
+                <div class="manage">
+                    <button (click)="setUserAdress('inputAdress');toggleDisplayProperty('displayUserAdress')" class="style-button">Confirmer</button>
+                    <button (click)="disableAllEditing([inputAdressInput,inputCodeInput]);toggleDisplayProperty('displayUserAdress');resetUserAdress();" class="style-button">Annuler</button>
+                </div>
+            </div> 
+        </div>
+        <div>Modifier mon mot de passe</div>
+    
+        <div> 
+            <div class="user-element-edit">
+                <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+                <label for="inputOldPassword">Ancien Mot de Passe</label>
+                <input  id="inputOldPassword" #inputOldPasswordForm type="password"  readonly [(ngModel)]="userCurrentPassword" [ngModelOptions]="{standalone: true}" class="input-base">
+                <label for="inputNewPassword">Nouveau Mot de Passe</label>
+                <input  id="inputNewPassword" #inputNewPasswordForm type="password"  readonly [(ngModel)]="userPasswordUpdate" [ngModelOptions]="{standalone: true}" class="input-base">
+                <label for="confirmPassword">Confirmer le mot de passe</label>
+                <input id="confirmPassword" #inputConfirmPasswordForm type="password" name="confirmPassword" readonly [(ngModel)]="confirmPassword" class="input-base" required/>
+                <div *ngIf="userPasswordUpdate != confirmPassword && confirmPassword" class="error-message">Les mots de passe ne correspondent pas</div>
+            </div>
+            <div class="manage"> 
+                <button   *ngIf="displayUserPassword" (click)="updatePassword(userCurrentPassword, userPasswordUpdate);toggleDisplayProperty('displayUserPassword')" class="style-button">Confirmer</button>
+                <button   *ngIf="displayUserPassword" (click)="disableAllEditing([inputOldPasswordForm,inputNewPasswordForm,inputConfirmPasswordForm]);toggleDisplayProperty('displayUserPassword');resetUserAdress();" class="style-button">Annuler</button>
+            </div>
+        </div>
+        <div *ngIf="!displayUserPassword">
+            <button (click)="enableAllEditing([inputOldPasswordForm, inputNewPasswordForm, inputConfirmPasswordForm]);toggleDisplayProperty('displayUserPassword')" class="style-button">Modifier</button>
+        </div>
+    </form>
+</div>
+<div *ngIf="loading" class="loading-overlay">
+    <p>Chargement en cours...</p>
+</div>

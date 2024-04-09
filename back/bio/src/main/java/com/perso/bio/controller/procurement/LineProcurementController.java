@@ -38,26 +38,26 @@ public class LineProcurementController {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<LineProcurement> getOneLine(@PathVariable Integer id) {
-            LineProcurement lineProcurement = this.lineProcurementService.getLine(id);
-            return ResponseEntity.ok(lineProcurement);
+        LineProcurement lineProcurement = this.lineProcurementService.getLine(id);
+        return ResponseEntity.ok(lineProcurement);
     }
 
     @GetMapping(path = "/all/{id}")
-    public ResponseEntity<List<LineProcurement>> getAllLine(@PathVariable Integer id) {
-            List<LineProcurement> lineProcurementList = this.lineProcurementService.getAllByProcurementId(id);
-            return ResponseEntity.ok(lineProcurementList);
+    public ResponseEntity<List<LineProcurement>> getAllLines(@PathVariable Integer id) {
+        List<LineProcurement> lineProcurementList = this.lineProcurementService.getAllByProcurementId(id);
+        return ResponseEntity.ok(lineProcurementList);
     }
 
     @PutMapping(path = "update/{id}")
     public ResponseEntity<String> updateLineProcurement(@PathVariable Integer id, @RequestBody LineProcurement lineProcurement) {
-            this.lineProcurementService.updateLineProcurement(id, lineProcurement);
-            return new ResponseEntity<>(MessageConstants.UPDATE, HttpStatus.NO_CONTENT);
+        this.lineProcurementService.updateLineProcurement(id, lineProcurement);
+        return new ResponseEntity<>(MessageConstants.UPDATE, HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(path = "delete/{id}")
     public ResponseEntity<String> deleteLineProcurement(@PathVariable Integer id) {
-            this.lineProcurementService.deleteLineProcurement(id);
-            return new ResponseEntity<>(MessageConstants.DELETE, HttpStatus.NO_CONTENT);
+        this.lineProcurementService.deleteLineProcurement(id);
+        return new ResponseEntity<>(MessageConstants.DELETE, HttpStatus.NO_CONTENT);
     }
 
     private void lineProcurementForCreation(LineProcurement lineProcurement) {
@@ -88,7 +88,7 @@ public class LineProcurementController {
 
         }
 
-        if (lineProcurement.getProduct() == null) {
+        if (lineProcurement.getProduct() == null || lineProcurement.getLineQuantity() > lineProcurement.getProduct().getProductStock()) {
             throw new ObjectNotFoundException(MessageConstants.PRODUCT_NOT_FOUND, lineProcurement.getProduct());
         }
     }

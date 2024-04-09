@@ -25,8 +25,13 @@ public class LineProcurementServiceImpl implements LineProcurementService {
 
     @Override
     public void createLineProcurement(LineProcurement lineProcurement) {
-        lineProcurement.setLineUnitPrice(setLinePrice(lineProcurement));
-        this.lineProcurementRepository.save(lineProcurement);
+        if (lineProcurement.getProduct().getProductStock() >= 1) {
+            lineProcurement.setLineUnitPrice(setLinePrice(lineProcurement));
+            this.lineProcurementRepository.save(lineProcurement);
+        } else {
+            throw new RuntimeException(MessageConstants.PRODUCT_OUT_OF_STOCK);
+        }
+
     }
 
     @Override
@@ -48,7 +53,7 @@ public class LineProcurementServiceImpl implements LineProcurementService {
     @Override
     public void updateLineProcurement(Integer lineId, LineProcurement lineProcurement) {
         Optional<LineProcurement> existingLineProcurement = this.lineProcurementRepository.findById(lineId);
-        if (existingLineProcurement.isPresent()) {
+        if (existingLineProcurement.isPresent() && lineProcurement.getLineQuantity() <= lineProcurement.getProduct().getProductStock()) {
             LineProcurement lineProcurementUpdate = existingLineProcurement.get();
             lineProcurementUpdate.setLineQuantity(Optional.ofNullable(lineProcurement.getLineQuantity()).orElse(lineProcurementUpdate.getLineQuantity()));
             lineProcurementUpdate.setProcurement(Optional.ofNullable(lineProcurement.getProcurement()).orElse(lineProcurementUpdate.getProcurement()));

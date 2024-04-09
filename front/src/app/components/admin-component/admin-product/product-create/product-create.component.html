@@ -1,0 +1,55 @@
+<div class="content">
+    <app-notification></app-notification>
+    <form class="product-detail">
+        <div class="product-element-edit">
+            <label>Nom</label>
+            <input type="text" [(ngModel)]="productCreateName" [ngModelOptions]="{standalone: true}" required="true" class="input-base">
+        </div>
+        <div class="product-element-edit">
+            <label>Description</label>
+            <textarea type="text" rows="4" cols="50" [(ngModel)]="productCreateDescription" [ngModelOptions]="{standalone: true}" required="true" class="input-base"></textarea>
+        </div>
+        <div class="product-element-edit">
+            <label>Prix</label>
+            <input type="number" [(ngModel)]="productCreatePrice" [ngModelOptions]="{standalone: true}" required="true" class="input-base" min="0">
+        </div>
+        <div class="product-element-edit">
+            <label>Quantité</label>
+            <input type="number" [(ngModel)]="productCreateStock" [ngModelOptions]="{standalone: true}" required="true"class="input-base" min="0">
+        </div>
+        <div class="product-element-edit">
+            <label>Image</label>
+            <div>
+                <input type="file" name="file" (change)="onFileSelected($event)" required="true" class="input-base">
+            </div>
+        </div>
+        <div class="filter-product">
+            <label>Maison</label>
+            <div class="house">
+                <select    id="houseSelect" [(ngModel)]="selectedHouse" (change)="setHouseProduct()" [ngModelOptions]="{standalone: true}" class="select-style">
+                    <option value="0">Maison</option>
+                    <option *ngFor="let house of houses" value={{house.houseId}}>{{house.houseName}}</option>
+                </select>
+            </div>
+            <label>Type</label>
+            <div class="type">
+                <select    id="typeSelect" [(ngModel)]="selectedType" (change)="setTypeProduct()" [ngModelOptions]="{standalone: true}" class="select-style" >
+                    <option value="0">Type</option>
+                    <option *ngFor="let type of types" value="{{type.typeId}}">{{type.typeName}}</option>
+                </select>
+            </div>
+            <label>Partie Corps</label>
+            <div class="body">
+                <select id="product.body[0]" [(ngModel)]="selectedBody" (change)="setBodyProduct()" [ngModelOptions]="{standalone: true}" class="select-style">
+                    <option value="0">Partie</option>
+                    <option *ngFor="let body of bodys" value="{{body.bodyId}}">{{body.bodyName}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="manage">
+            <button type="submit" (click)="createProduct()" class="style-button">Enregister</button>
+            <button type="submit" (click)="cancel()" class="style-button">Annuler</button>
+        </div>
+    </form>
+
+</div>

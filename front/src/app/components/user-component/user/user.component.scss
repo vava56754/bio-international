@@ -1,0 +1,28 @@
+.content{
+    .form-user {
+        padding-top: 60px;
+        margin-bottom: 200px;
+        padding-inline: 2%;
+        background-color: white;
+        justify-self: center;
+        display: grid;
+        
+        gap: 2%;
+    
+        .info {
+            margin: 2%;
+            .user-element-edit {
+                margin-bottom: 3vh;
+            }
+        }
+        .address {
+            margin: 2%;
+            .user-element-edit {
+                margin-bottom: 3vh;
+                
+                
+            }
+        }
+    }
+}
+    

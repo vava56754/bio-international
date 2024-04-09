@@ -5,7 +5,9 @@ import com.perso.bio.constants.MessageConstants;
 import com.perso.bio.controller.StorageController;
 import com.perso.bio.model.House;
 
+import com.perso.bio.model.Product;
 import com.perso.bio.repository.HouseRepository;
+import com.perso.bio.repository.ProductRepository;
 import com.perso.bio.service.storage.FilesStorageService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import java.io.FileNotFoundException;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,17 +29,20 @@ public class HouseServiceImpl implements HouseService {
 
     HouseRepository houseRepository;
 
+    ProductRepository productRepository;
+
     FilesStorageService filesStorageService;
 
     @Autowired
-    public HouseServiceImpl(HouseRepository houseRepository, FilesStorageService filesStorageService) {
+    public HouseServiceImpl(HouseRepository houseRepository, ProductRepository productRepository, FilesStorageService filesStorageService) {
         this.houseRepository = houseRepository;
+        this.productRepository = productRepository;
         this.filesStorageService = filesStorageService;
     }
 
     @Override
     public void createHouse(House house, MultipartFile file) throws FileNotFoundException {
-        saveFile(house, file);
+        this.saveFile(house, file);
         this.houseRepository.save(house);
     }
 
@@ -61,10 +67,9 @@ public class HouseServiceImpl implements HouseService {
             House houseUpdate = existingHouse.get();
             houseUpdate.setHouseName(Optional.ofNullable(house.getHouseName()).orElse(houseUpdate.getHouseName()));
             houseUpdate.setHouseDescription(Optional.ofNullable(house.getHouseDescription()).orElse(houseUpdate.getHouseDescription()));
-            //houseUpdate.setHouseLink(Optional.ofNullable(house.getHouseLink()).orElse(houseUpdate.getHouseLink()));
-            if (!file.isEmpty()) {
-                deleteFileForHouse(houseId);
-                saveFile(houseUpdate, file);
+            if (!"blob".equals(file.getOriginalFilename())) {
+                this.deleteFileForHouse(houseId);
+                this.saveFile(houseUpdate, file);
             }
             this.houseRepository.save(houseUpdate);
         } else {
@@ -73,7 +78,7 @@ public class HouseServiceImpl implements HouseService {
     }
 
     @Override
-    public List<House> getAllHouse() {
+    public List<House> getAllHouses() {
         List<House> houses = this.houseRepository.findAll();
         houses.forEach(house -> {
             String url = null;
@@ -96,8 +101,18 @@ public class HouseServiceImpl implements HouseService {
     public void deleteHouse(Integer houseId) throws FileNotFoundException {
         Optional<House> existingHouse = this.houseRepository.findById(houseId);
         if (existingHouse.isPresent()) {
-            deleteFileForHouse(houseId);
+            List<Product> products;
+            products = this.productRepository.findByHouseHouseId(houseId);
+            if (!products.isEmpty()) {
+                for (Product product : products) {
+                    product.setHouse(null);
+                }
+            }
+
+            this.deleteFileForHouse(houseId);
             this.houseRepository.deleteById(houseId);
+
+
         } else {
             throw new EntityNotFoundException(MessageConstants.HOUSE_SERVICE_ERROR_MESSAGE + houseId);
         }

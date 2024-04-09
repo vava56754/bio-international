@@ -12,7 +12,9 @@ public class Jwt {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int jwtId;
 
+    @Column(length = 1000)
     private String jwtValue;
+
     private boolean jwtDisable;
     private boolean jwtExpire;
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE})

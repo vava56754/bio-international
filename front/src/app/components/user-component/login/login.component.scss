@@ -1,0 +1,47 @@
+.content {
+    .login-content {
+        justify-self: center;
+        max-width: 1200px;
+        .form-login {
+            margin-top: 80px;
+            margin-bottom: 80px;
+            display: grid;
+            gap: 40px;
+            justify-items: center;
+            label{
+                font-weight: bolder;
+                font-size: larger;
+            }
+        }
+        
+        .sign-up {
+            display: grid;
+            justify-items: center;
+            padding-bottom: 50px;
+        }
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .content {
+        .login-content {
+            max-width: 800px;
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .content {
+        .login-content {
+            max-width: 600px;
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .content {
+        .login-content {
+            max-width: 350px;
+        }
+    }
+}

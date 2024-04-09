@@ -1,0 +1,25 @@
+<div class="content">
+    <form class="house-detail-admin">
+        <div class="house-element-edit" >
+            <label>Nom :</label>
+            <input type="text"  [(ngModel)]="houseCreateName" [ngModelOptions]="{standalone: true}" class="input-base">
+        </div>
+        <div class="house-element-edit">
+            <label>Description :</label>
+   
+            <textarea  [(ngModel)]="houseCreateDescription" [ngModelOptions]="{standalone: true}" class="input-base">
+            </textarea>
+        </div>
+        <div class="house-element-edit">
+            <label>Image</label>
+            <div>
+                <input type="file" name="file" (change)="onFileSelected($event)"  class="input-base">
+            </div>
+        </div>
+        <div class="manage">
+            <button  type="submit" (click)="createHouse()" class="style-button">Créer</button>
+            <button (click)="cancel()" class="style-button">Annuler</button>
+        </div>
+    </form>
+    <app-notification></app-notification>
+</div>

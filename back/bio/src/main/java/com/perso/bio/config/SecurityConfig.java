@@ -28,34 +28,41 @@ public class SecurityConfig {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JwtFilter jwtFilter;
     private final UserDetailsService userDetailsService;
+    private final UserRepository userRepository;
 
     @Autowired
-    UserRepository userRepository;
-
-    public SecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder, JwtFilter jwtFilter, UserDetailsService userDetailsService) {
+    public SecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder, JwtFilter jwtFilter, UserDetailsService userDetailsService, UserRepository userRepository) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.jwtFilter = jwtFilter;
         this.userDetailsService = userDetailsService;
+        this.userRepository = userRepository;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return
-                httpSecurity.csrf(AbstractHttpConfigurer::disable)
+                httpSecurity.csrf(AbstractHttpConfigurer::disable).cors(AbstractHttpConfigurer::disable)
                         .authorizeHttpRequests(authorize ->
-                                authorize.requestMatchers(HttpMethod.POST, "/user/sign").permitAll()
+                                authorize.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                        .requestMatchers(HttpMethod.POST, "/user/sign").permitAll()
                                         .requestMatchers(HttpMethod.POST, "/user/activation").permitAll()
                                         .requestMatchers(HttpMethod.POST, "/user/login").permitAll()
                                         .requestMatchers(HttpMethod.GET, "/files/{filename:.+}").permitAll()
-                                        .requestMatchers(HttpMethod.GET, "/product/{id}").permitAll()
-                                        .requestMatchers(HttpMethod.GET, "/product/all").permitAll()
+                                        .requestMatchers(HttpMethod.GET, "/product/visible/{id}").permitAll()
+                                        .requestMatchers(HttpMethod.GET, "/product/all/visible").permitAll()
+                                        .requestMatchers(HttpMethod.GET, "/product/search").permitAll()
                                         .requestMatchers(HttpMethod.GET, "/product/type/{typeId}/body/{bodyId}").permitAll()
                                         .requestMatchers(HttpMethod.GET, "/house/{id}").permitAll()
                                         .requestMatchers(HttpMethod.GET, "/house/all").permitAll()
                                         .requestMatchers(HttpMethod.GET, "/type/all").permitAll()
                                         .requestMatchers(HttpMethod.GET, "/body/all").permitAll()
                                         .requestMatchers(HttpMethod.PUT, "/user/update").hasAnyRole(TypeDeRole.ADMIN.name(), TypeDeRole.USER.name())
+                                        .requestMatchers(HttpMethod.PUT, "/user/update/password").hasAnyRole(TypeDeRole.ADMIN.name(), TypeDeRole.USER.name())
+                                        .requestMatchers(HttpMethod.GET, "/user/get").hasAnyRole(TypeDeRole.ADMIN.name(), TypeDeRole.USER.name())
                                         .requestMatchers(HttpMethod.POST, "/user/logout").hasAnyRole(TypeDeRole.ADMIN.name(), TypeDeRole.USER.name())
+                                        .requestMatchers("/procurement/**", "/line/**").hasAnyRole(TypeDeRole.ADMIN.name(), TypeDeRole.USER.name())
+                                        .requestMatchers(HttpMethod.GET, "/procurement/validate/all").hasRole(TypeDeRole.ADMIN.name())
+                                        .requestMatchers(HttpMethod.GET, "/procurement/complete/{id}").hasRole(TypeDeRole.ADMIN.name())
                                         .requestMatchers("/house/**", "/product/**", "/type/**", "/body/**", "/user/**").hasRole(TypeDeRole.ADMIN.name())
                                         .anyRequest().authenticated())
                         .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS)

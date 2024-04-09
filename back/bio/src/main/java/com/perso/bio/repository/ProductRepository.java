@@ -8,10 +8,17 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
+    Product findByProductIdAndIsVisibleTrue(Integer productId);
 
-    List<Product> findByProductTypesTypeIdAndBodyPartsBodyId(Integer typeId, Integer bodyId);
+    List<Product> findByProductTypesTypeIdAndBodyPartsBodyIdAndIsVisibleTrueOrderByProductNameAsc(Integer typeId, Integer bodyId);
 
-    List<Product> findByProductTypesTypeId(Integer typeId);
+    List<Product> findByIsVisibleTrueOrderByProductNameAsc();
 
-    List<Product> findByBodyPartsBodyId(Integer bodyId);
+    List<Product> findByProductTypesTypeIdAndIsVisibleTrueOrderByProductNameAsc(Integer typeId);
+
+    List<Product> findByBodyPartsBodyIdAndIsVisibleTrueOrderByProductNameAsc(Integer bodyId);
+
+    List<Product> findByProductNameContainingIgnoreCaseAndIsVisibleTrue(String name);
+
+    List<Product> findByHouseHouseId(Integer id);
 }

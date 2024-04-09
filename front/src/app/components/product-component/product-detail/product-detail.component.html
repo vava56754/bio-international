@@ -1,0 +1,47 @@
+<div class="content">
+    <app-picture-content [title]="'Nos Produits'" [src]="'../../assets/wallpaper/product.jpg'"></app-picture-content>
+    <div class="product" *ngIf="product">
+        <div class="product-content">
+            <div *ngIf="product.productImageUrl" class="product-image">
+                <img [src]="product.productImageUrl" alt="Product Image">
+            </div>
+            <div class="product-info">
+                <div class="product-title">
+                    <h2>{{ product.productName }}</h2>
+                    <p *ngIf="product.productStock > 0">Disponible Immédiatement</p>
+                    <p *ngIf="product.productStock == 0">Indisponible pour le moment</p>
+                </div>
+                <div>
+                    <label><h3>Prix :</h3></label>
+                    <p class="product-price">{{ product.productUnitPrice}} €</p></div> 
+                <div *ngIf="product.productStock > 0">
+                    <div class="quantity">
+                        
+                        <input *ngIf="product.productStock < 10" type="number" [(ngModel)]="productQuantityBasket" [ngModelOptions]="{standalone: true}" required="true" class="input-base" min="1" max="{{product.productStock}}">
+                        <input *ngIf="product.productStock >= 10" type="number" [(ngModel)]="productQuantityBasket" [ngModelOptions]="{standalone: true}" required="true" class="input-base" min="1" max="10">
+                    </div>
+                    <button class="style-button" (click)="createProcurement(product)">Ajouter</button>
+                </div>
+            </div>
+            <div>
+    
+            </div>
+
+        </div>
+        
+        <div class="product-description">
+            <h3>{{ product.productName }}</h3>
+            <p>
+                {{product.productDescription}}
+            </p>
+        </div>
+        
+    </div>
+    <app-notification></app-notification>
+    
+</div>
+<div *ngIf="!product" class="productEmpty">
+    <i class="fa-solid fa-store"></i>
+    <h2>There is no product
+    </h2>
+</div>

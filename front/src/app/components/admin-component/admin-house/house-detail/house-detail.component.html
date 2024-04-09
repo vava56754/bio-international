@@ -1,0 +1,38 @@
+<div class="content">
+    <form class="house-detail-admin" (ngSubmit)="updateHouse(house.houseId)">
+        <div class="house-element-edit">
+            <label>Nom :</label>
+            <input  id="inputName" type="text" value={{house.houseName}}  readonly [(ngModel)]="houseUpdateName"  [ngModelOptions]="{standalone: true}" class="input-base">
+            <div *ngIf="!displayHouseName">
+                <button (click)="enableEditing('inputName');displayHouseNameEditButton()" class="style-button">Modifier</button>
+            </div>
+            <div *ngIf="displayHouseName" class="manage"> 
+                <button (click)="setHouseProperty('inputName','houseName', this.houseUpdateName);displayHouseNameEditButton()" class="style-button">Confirmer</button>
+                <button (click)="disableEditing('inputName');displayHouseNameEditButton();resetHouseName();" class="style-button">Annuler</button>
+            </div>
+        </div>
+        <div class="house-element-edit">
+            <label>Description :</label>
+            <textarea id="inputDescription" type="text" value={{house.houseDescription}}  readonly [(ngModel)]="houseUpdateDescription" [ngModelOptions]="{standalone: true}" class="input-base">
+            </textarea>
+            <div *ngIf="!displayHouseDescription">
+                <button (click)="enableEditing('inputDescription');displayHouseDescriptionEditButton()" class="style-button">Modifier</button>
+            </div>
+            <div *ngIf="displayHouseDescription" class="manage"> 
+                <button (click)="setHouseProperty('inputDescription','houseDescription', this.houseUpdateDescription);displayHouseDescriptionEditButton()" class="style-button">Confirmer</button>
+                <button (click)="disableEditing('inputDescription');displayHouseDescriptionEditButton();resetHouseDescription();" class="style-button">Annuler</button>
+            </div>
+        </div>
+        <div class="house-element-edit">
+            <div *ngIf="house.houseImageUrl" class="house-image">
+                <img [src]="house.houseImageUrl" alt="House Image">
+            </div>
+            <input type="file" name="file" (change)="onFileSelected($event)" class="input-base">
+        </div>
+        <div class="manage">
+            <button  type="submit"  class="style-button" >Enregistrer</button>
+            <button (click)="cancel()"  class="style-button">Annuler</button>
+        </div>
+    </form>
+    
+</div>

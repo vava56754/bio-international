@@ -29,7 +29,8 @@ public class StorageController {
     @ResponseBody
     public ResponseEntity<Resource> getFile(@PathVariable String filename) throws MalformedURLException {
         Resource file = filesStorageService.load(filename);
-        MediaType mediaType = MediaType.parseMediaType("image/jpeg");
+
+        MediaType mediaType;
 
         try {
             mediaType = MediaType.parseMediaType(Files.probeContentType(file.getFile().toPath()));

@@ -1,0 +1,35 @@
+<div class="content">
+    <div class="search-list">
+        <div *ngIf="products != []">
+            <div *ngFor="let product of products" class="products">
+                <a (click)="goToProductDetail(product.productId)" class="product">
+                    <div class="product-property">
+                        <div class="column-image">
+                            <div *ngIf="product.productImageUrl" class="product-image">
+                                <img [src]="product.productImageUrl" alt="Product Image">
+                            </div>   
+                        </div>
+                        <div class="property">
+                            <div class="column-info">
+                                <div>
+                                    <h3>{{product.productName}}</h3>
+                                </div>
+                                <div> 
+                                    <a>{{product.productUnitPrice}}€</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="button">
+                        <button (click)="createProcurement(product)" class="style-button">Ajouter</button>
+                    </div>
+                </a>
+                
+            </div>
+            
+        </div>
+        
+    </div>
+    
+</div>

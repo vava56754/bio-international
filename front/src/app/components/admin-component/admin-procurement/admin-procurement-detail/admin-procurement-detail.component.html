@@ -1,0 +1,74 @@
+<div class="content">
+    <div class="current-procurement">
+        <button  (click)="back()"class="style-button"><i class="fa-solid fa-arrow-left"></i></button>
+        <div>
+            <h1>Detail Commande</h1>
+        </div>
+        <div class="info-procurement">
+            <h2>Commande N°{{id}}</h2>
+            <div>réalisée le {{procurement.procurementDate | date: 'dd/MM/yyyy, à HH:mm' }}</div>
+        </div>
+        <div *ngIf="procurement.procurementId != 0 && procurement.amount != 0">
+            <div *ngFor="let line of procurement.lineProcurementList" class="procurement">
+                <div class="procurement-property">
+                    <div class="column-image">
+                        <div *ngIf="line.product.productImageUrl" class="product-image">
+                            <img [src]="line.product.productImageUrl" alt="Product Image">
+                        </div>
+                        
+                    </div>
+                    <div class="property">
+                        <div class="column-info">
+                            <div>
+                                <h3>{{line.product.productName}}</h3>
+                            </div>
+                            <div> 
+                                <a>{{line.lineUnitPrice}}€</a>
+                            </div>
+                            
+                        </div>
+                        <div class="quantity">
+                            <input type="number" [(ngModel)]="line.lineQuantity" [ngModelOptions]="{standalone: true}" required="true"class="input-base" (change)="updateLineProcurement(line)" min="0" max="{{line.product.productStock}}">
+                        </div>
+                    </div>
+                    <div class="delete"><a (click)="openDeleteConfirmationLineProcurement(line.lineId)" class="fa-solid fa-xmark"></a></div>
+                </div>
+                
+            </div>
+            <div class="amount">
+                <a>Total : </a>
+                <a>{{procurement.amount}}€</a>
+            </div>
+            <div class="manage">
+                <button (click)="completeProcurement(procurement)" class="style-button" >Valider</button>
+                <button (click)="openDeleteConfirmationProcurement()" class="style-button" >Supprimer</button>
+            </div>
+            
+        </div>
+        <div *ngIf="procurement && procurement.userId" class="user-details">
+            <div class="user-details-name">
+                <h3>Nom</h3>
+                <p>{{procurement.userId.userFirstName}}</p>
+                <p>{{procurement.userId.userName}}</p>
+                
+            </div>
+            <div class="user-details-contact">
+                <h3>Coordonnées</h3>
+                <p>{{procurement.userId.userMail}}</p>
+                <p>{{procurement.userId.userPhone}}</p>
+            </div>
+            <div class="user-details-address">
+                <h3>Adresse</h3>
+                <p>{{procurement.userId.userAddress}},</p>
+                <p>{{procurement.userId.userPostalCode}},</p>
+                <p>{{procurement.userId.userCity}},</p>
+                <p>{{procurement.userId.userCountry}}</p>
+            </div>
+        </div>
+        <div *ngIf="procurement.procurementId == 0 || procurement.amount == 0" class="empty">
+            <i class="fa-solid fa-basket-shopping"></i>
+            <h2>No Order Here</h2>
+        </div>
+    </div>
+    <app-notification></app-notification>
+</div>
