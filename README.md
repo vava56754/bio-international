@@ -7,6 +7,8 @@ Il est conteneurisé à l'aide de Docker pour simplifier le déploiement et la g
 ## Prérequis
 Avant de commencer, assurez-vous d'avoir installé Docker sur votre système.
 
+De posséder le jdk 17 et la version 8.3 de Gradle
+
 ## Instructions pour le lancement
 Pour lancer l'application, suivez ces étapes :
 
